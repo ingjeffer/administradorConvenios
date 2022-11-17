@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './dashboard.component';
 
 const routes: Routes = [
-  { path: 'admin', loadChildren: () => import('@modules/administrator/administrator.module').then((m) => m.AdministratorModule) },
+  { path: 'admin', loadChildren: () => import('@modules/administrador/administrador.module').then((m) => m.AdministradorModule) },
   { path: '', component: DashboardComponent }
 ];
 
