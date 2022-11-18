@@ -9,3 +9,13 @@ export interface IUser {
     Password: string;
     Roles: IRoles[];
 }
+
+export interface IUserTable {
+    Id: string;
+    Nombres: string;
+    Apellidos: string;
+    TipoId: string;
+    Email: string;
+    Password?: string;
+    Roles: string;
+}
