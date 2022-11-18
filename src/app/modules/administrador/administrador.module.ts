@@ -1,17 +1,11 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-
-import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
+import { NgModule } from '@angular/core';
+import { MaterialModule } from '@shared/material';
 
 
 import { AdministradorRoutingModule } from './administrador-routing.module';
 import { AdministradorComponent } from './administrador.component';
-import { ListUserComponent, FormUserComponent } from './components';
+import { FormUserComponent, ListUserComponent } from './components';
 import { AdministradorService } from './services';
 
 
@@ -24,13 +18,7 @@ import { AdministradorService } from './services';
   imports: [
     CommonModule,
     AdministradorRoutingModule,
-    ReactiveFormsModule,
-    HttpClientModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatInputModule,
-    MatIconModule,
-
+    MaterialModule,
   ],
   providers: [
     AdministradorService

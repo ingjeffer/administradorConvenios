@@ -12,9 +12,7 @@ const routes: Routes = [
       { path: 'form', component: FormUserComponent },
     ]
   }
-];
-
-@NgModule({
+];@NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
