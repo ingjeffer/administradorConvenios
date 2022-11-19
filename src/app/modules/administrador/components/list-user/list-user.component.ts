@@ -1,5 +1,5 @@
-import { Router } from '@angular/router';
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -7,6 +7,7 @@ import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { IUser, IUserTable } from '@modules/administrador/entities';
 import { AdministradorService } from '@modules/administrador/services';
 import { Subject, takeUntil } from 'rxjs';
+import { FormUserComponent } from '..';
 
 @Component({
   selector: 'app-list-user',
@@ -25,13 +26,14 @@ export class ListUserComponent implements OnInit, OnDestroy, AfterViewInit {
   faEdit = faEdit;
   faTrash = faTrash;
 
-  _destroy$ = new Subject();
-  constructor(private _adminService: AdministradorService, private _router: Router) { }
+  private _destroy$ = new Subject();
+  constructor(private _adminService: AdministradorService, 
+    private _dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this._adminService.listUser()
-      .pipe(takeUntil(this._destroy$))
-      .subscribe(this._mapUserResponse.bind(this));
+    this._dialog.afterAllClosed
+    .pipe(takeUntil(this._destroy$))
+    .subscribe(() => this._callUsers());
   }
 
   ngOnDestroy(): void {
@@ -62,7 +64,15 @@ export class ListUserComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   createUser() {
-    this._router.navigate(['admin/form']);
+    this._dialog.open(FormUserComponent, {
+      width: '500px'
+    });
+  }
+
+  private _callUsers() {
+    this._adminService.listUser()
+      .pipe(takeUntil(this._destroy$))
+      .subscribe(this._mapUserResponse.bind(this));
   }
 
   private _mapUserResponse(res: IUser[]) {

@@ -2,10 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTableModule } from '@angular/material/table';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
@@ -19,6 +23,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatPaginatorModule,
     MatInputModule,
     MatButtonModule,
+    MatDialogModule,
     FontAwesomeModule,
   ],
   exports: [
@@ -28,6 +33,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     MatPaginatorModule,
     MatInputModule,
     MatButtonModule,
+    MatSelectModule,
     FontAwesomeModule,
   ]
 })

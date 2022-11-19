@@ -1,1 +1,61 @@
-<p>form-user works!</p>
+<div class="form-user-cont">
+    <h1 mat-dialog-title>Datos del Usuario</h1>
+    <form class="form-user" [formGroup]="formGroup">
+        <mat-form-field appearance="fill">
+            <mat-label> {{ titleForm[0] }} </mat-label>
+            <input type="number" matInput [formControlName]="formFields[0]">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label> {{ titleForm[1] }} </mat-label>
+            <mat-select [formControlName]="formFields[1]">
+                <mat-option value="CC">Cédula de Ciudadanía</mat-option>
+                <mat-option value="PT">Pasaporte</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label> {{ titleForm[2] }} </mat-label>
+            <input matInput [formControlName]="formFields[2]">
+        </mat-form-field>
+    
+        <mat-form-field appearance="fill">
+            <mat-label> {{ titleForm[3] }} </mat-label>
+            <input matInput [formControlName]="formFields[3]">
+        </mat-form-field>
+    
+        <mat-form-field appearance="fill">
+            <mat-label> {{ titleForm[4] }} </mat-label>
+            <input type="email" matInput [formControlName]="formFields[4]">
+        </mat-form-field>
+    
+        <mat-form-field appearance="fill">
+            <mat-label> {{ titleForm[5] }} </mat-label>
+            <input type="password" matInput [formControlName]="formFields[5]">
+        </mat-form-field>
+    
+        <mat-form-field appearance="fill">
+            <mat-label> {{ titleForm[6] }} </mat-label>
+            <input type="password" matInput [formControlName]="formFields[6]">
+        </mat-form-field>
+    
+        <mat-form-field appearance="fill">
+            <mat-label> {{ titleForm[7] }} </mat-label>
+            <mat-select [formControlName]="formFields[7]">
+                <mat-option value="1">Administrador</mat-option>
+                <mat-option value="2">Profecional de convenios</mat-option>
+                <mat-option value="3">Director juridico</mat-option>
+                <mat-option value="4">Vicerectiria</mat-option>
+                <mat-option value="5">Gestor ante la UIS</mat-option>
+                <mat-option value="6">Director relext</mat-option>
+                <mat-option value="7">Rectoria</mat-option>
+                <mat-option value="8">Institucion cooperante</mat-option>
+                <mat-option value="9">Consejo academico</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </form>
+
+    <div class="col-12 d-flex justify-content-center">
+        <button class="mx-2" mat-raised-button (click)="dialogRef.close()">Cancelar</button>
+        <button class="mx-2" [disabled]="formGroup.invalid" mat-raised-button (click)="save()">Guardar</button>
+    </div>
+
+</div>
