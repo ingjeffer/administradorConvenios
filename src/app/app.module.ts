@@ -6,10 +6,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GeneralInterceptorService } from '@core/interceptors';
+import { LoginModule } from '@modules/login/login.module';
+import { DashboardModule } from '@modules/dashboard/dashboard.module';
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { ModalConfirmModule } from '@core/modal-confirm';
 
 @NgModule({
   declarations: [
@@ -22,7 +25,10 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     FontAwesomeModule,
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    ModalConfirmModule,
+    LoginModule,
+    DashboardModule,
   ],
   providers: [
     {
