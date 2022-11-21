@@ -8,7 +8,7 @@
     </div>
   
     <div class="col-12 col-md-6 d-flex justify-content-center">
-      <button mat-raised-button (click)="createUser()">Crear Usuario</button>
+      <button mat-raised-button (click)="openFormModal('CREATE')">Crear Usuario</button>
     </div>
   </div>
   
@@ -55,11 +55,11 @@
       <ng-container [matColumnDef]="displayedColumns[6]">
         <th mat-header-cell *matHeaderCellDef aria-label="row actions"> {{ titleColumns[6] }} </th>
         <td mat-cell *matCellDef="let element">
-          <button mat-icon-button aria-label="Actions row" (click)="editUser(element.Id); $event.stopPropagation()">
+          <button mat-icon-button aria-label="Actions row" (click)="openFormModal('EDIT', element); $event.stopPropagation()">
             <fa-icon [icon]="faEdit"></fa-icon>
           </button>
     
-          <button mat-icon-button aria-label="Actions row" (click)="deleteUser(element.Id); $event.stopPropagation()">
+          <button mat-icon-button aria-label="Actions row" (click)="deleteUser(element); $event.stopPropagation()">
             <fa-icon [icon]="faTrash"></fa-icon>
           </button>
         </td>

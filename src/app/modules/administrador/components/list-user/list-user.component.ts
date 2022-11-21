@@ -1,12 +1,16 @@
-import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+
 import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
-import { IUser, IUserTable } from '@modules/administrador/entities';
-import { AdministradorService } from '@modules/administrador/services';
 import { Subject, takeUntil } from 'rxjs';
+
+import { IModalData, ModalConfirmService } from '@core/modal-confirm';
+import { IUser, IUserTable, TypeModal } from '@modules/administrador/entities';
+import { AdministradorService } from '@modules/administrador/services';
 import { FormUserComponent } from '..';
 
 @Component({
@@ -14,7 +18,7 @@ import { FormUserComponent } from '..';
   templateUrl: './list-user.component.html',
   styleUrls: ['./list-user.component.sass']
 })
-export class ListUserComponent implements OnInit, OnDestroy, AfterViewInit {
+export class ListUserComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -27,23 +31,26 @@ export class ListUserComponent implements OnInit, OnDestroy, AfterViewInit {
   faTrash = faTrash;
 
   private _destroy$ = new Subject();
-  constructor(private _adminService: AdministradorService, 
+  private _userSelected: IUserTable;
+
+  constructor(
+    private _adminService: AdministradorService,
+    private _modalService: ModalConfirmService,
     private _dialog: MatDialog) { }
 
   ngOnInit(): void {
     this._dialog.afterAllClosed
     .pipe(takeUntil(this._destroy$))
-    .subscribe(() => this._callUsers());
+    .subscribe(this._callUsers.bind(this));
+
+    this._modalService.confirm$
+    .pipe(takeUntil(this._destroy$))
+    .subscribe(this._confirmModal.bind(this));
   }
 
   ngOnDestroy(): void {
     this._destroy$.next(true);
     this._destroy$.complete();
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
   }
 
   applyFilter(event: Event) {
@@ -55,17 +62,31 @@ export class ListUserComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  editUser(event: any) {
-    console.log(event);
-  }
-
   deleteUser(event: any) {
     console.log(event);
+    this._userSelected = event;
+    
+    const data: IModalData = {
+      message: '¿Estás seguro de eliminar al usuario?',
+      buttonCancel: 'Cancelar',
+      buttonOk: 'Eliminar'
+    };
+
+    this._modalService.open(true, {
+      data
+    });
   }
 
-  createUser() {
+  openFormModal(type: TypeModal, data?: IUser) {
     this._dialog.open(FormUserComponent, {
-      width: '500px'
+      width: '500px',
+      data: {
+        type,
+        data: {
+          ...data,
+          RepeatPassword: data?.Password,
+        }
+      }
     });
   }
 
@@ -82,9 +103,29 @@ export class ListUserComponent implements OnInit, OnDestroy, AfterViewInit {
       Apellidos: us.Apellidos,
       TipoId: us.TipoId,
       Email: us.Email,
+      Password: us.Password,
       Roles: us.Roles.length > 0 ? us.Roles[0].Nombre : '',
     }));
     this.dataSource = new MatTableDataSource<IUserTable>(data);
+    this._setupDataSource();
+  }
+
+  private _confirmModal(confirm: boolean) {
+    console.log(confirm);
+    
+    if (confirm) {
+      const { Id, TipoId } = this._userSelected;
+      this._adminService.deleteUser(TipoId, Id).subscribe(this._responseDelete.bind(this));
+    }
+  }
+
+  private _responseDelete(data: any) {
+    console.log(data);
+  }
+
+  private _setupDataSource() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
 }

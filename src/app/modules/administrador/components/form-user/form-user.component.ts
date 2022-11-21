@@ -1,9 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { TypeModal } from './../../entities/user.interface';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
-import { IUser } from '@modules/administrador/entities';
+import { IRoles, ITypeModal, IUser } from '@modules/administrador/entities';
 import { AdministradorService } from '@modules/administrador/services';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -16,18 +18,44 @@ export class FormUserComponent implements OnInit, OnDestroy {
 
   titleForm: string[] = ['Cédula', 'Tipo de Documento', 'Nombres', 'Apellidos', 'Correo', 'Contraseña', 'Repetir Contraseña', 'Rol'];
   formFields: string[] = ['Id', 'TipoId', 'Nombres', 'Apellidos', 'Email', 'Password', 'RepeatPassword', 'Roles'];
-
+  roles: IRoles[] = [
+    { Id: 1, Nombre: 'Administrador' },
+    { Id: 2, Nombre: 'Profecional de convenios' },
+    { Id: 3, Nombre: 'Director juridico' },
+    { Id: 4, Nombre: 'Vicerectiria' },
+    { Id: 5, Nombre: 'Gestor ante la UIS' },
+    { Id: 6, Nombre: 'Director relext' },
+    { Id: 7, Nombre: 'Rectoria' },
+    { Id: 8, Nombre: 'Institucion cooperante' },
+    { Id: 9, Nombre: 'Consejo academico' },
+  ];
   formGroup: FormGroup;
+  typeForm: TypeModal;
+
+  showPassword = false;
+  showRepeatPassword = false;
+  faEye = faEye;
+  faEyeSlash = faEyeSlash;
 
   private _passwordLength = 6;
   private _destroy$ = new Subject();
 
-  constructor(public dialogRef: MatDialogRef<FormUserComponent>, 
+  constructor(
+    public dialogRef: MatDialogRef<FormUserComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: ITypeModal<IUser>,
     private _adminService: AdministradorService) {
     this._createForm();
    }
 
   ngOnInit(): void {
+    this.dialogRef.afterOpened()
+    .pipe(takeUntil(this._destroy$))
+    .subscribe(() => {
+      this.typeForm = this.data.type;
+      if (!!this.data && this.data.type === 'EDIT') {
+        this._setFormValues(this.data.data)
+      }
+    });
   }
 
   ngOnDestroy(): void {
@@ -37,7 +65,6 @@ export class FormUserComponent implements OnInit, OnDestroy {
 
   save() {
     const values = this.formGroup.value;
-    console.log(values);
     const { Id, Nombres, Apellidos, Password, Email, Roles, TipoId } = values;
     
     const user: IUser = {
@@ -49,21 +76,18 @@ export class FormUserComponent implements OnInit, OnDestroy {
       Password,
       Roles: [
         {
-          Id: Roles,
+          Id: 1,
           Nombre: 'admin'
         }
       ]
     }
-
-    console.log(user);
     
-    this._adminService.createUser(user)
+    this._adminService[this.typeForm === 'CREATE' ? 'createUser' : 'updateUser'](user)
     .pipe(takeUntil(this._destroy$))
     .subscribe(this._mapUserResponse.bind(this));
   }
 
   private _mapUserResponse(res: IUser) {
-    console.log(res);
     this.dialogRef.close();
   }
 
@@ -78,6 +102,10 @@ export class FormUserComponent implements OnInit, OnDestroy {
       [this.formFields[6]]: new FormControl('', [Validators.required, Validators.maxLength(this._passwordLength), Validators.minLength(this._passwordLength)]),
       [this.formFields[7]]: new FormControl('', [Validators.required]),
     });
+  }
+
+  private _setFormValues(user: IUser) {
+    this.formGroup.setValue(user);
   }
 
 }

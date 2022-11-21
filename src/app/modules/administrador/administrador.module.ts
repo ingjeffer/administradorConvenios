@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { MaterialModule } from '@shared/material';
 
+import { ModalConfirmModule } from '@core/modal-confirm';
+import { MaterialModule } from '@shared/material';
 
 import { AdministradorRoutingModule } from './administrador-routing.module';
 import { AdministradorComponent } from './administrador.component';
@@ -19,6 +20,7 @@ import { AdministradorService } from './services';
     CommonModule,
     AdministradorRoutingModule,
     MaterialModule,
+    ModalConfirmModule,
   ],
   providers: [
     AdministradorService

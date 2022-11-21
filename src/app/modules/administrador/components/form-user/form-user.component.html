@@ -2,8 +2,12 @@
     <h1 mat-dialog-title>Datos del Usuario</h1>
     <form class="form-user" [formGroup]="formGroup">
         <mat-form-field appearance="fill">
-            <mat-label> {{ titleForm[0] }} </mat-label>
-            <input type="number" matInput [formControlName]="formFields[0]">
+            <mat-label> {{ titleForm[0] }} 
+                <ng-container *ngIf="typeForm === 'EDIT'">
+                    <span class="text-danger">Solo lectura</span>
+                </ng-container>
+            </mat-label>
+            <input type="number" matInput [readonly]="typeForm === 'EDIT'" [formControlName]="formFields[0]">
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label> {{ titleForm[1] }} </mat-label>
@@ -29,26 +33,24 @@
     
         <mat-form-field appearance="fill">
             <mat-label> {{ titleForm[5] }} </mat-label>
-            <input type="password" matInput [formControlName]="formFields[5]">
+            <input [type]="showPassword ? 'text' : 'password'" matInput [formControlName]="formFields[5]">
+            <mat-icon matSuffix (click)="showPassword = !showPassword">
+                <fa-icon [icon]="showPassword ? faEyeSlash : faEye"></fa-icon>
+            </mat-icon>
         </mat-form-field>
     
         <mat-form-field appearance="fill">
             <mat-label> {{ titleForm[6] }} </mat-label>
-            <input type="password" matInput [formControlName]="formFields[6]">
+            <input [type]="showRepeatPassword ? 'text' : 'password'" matInput [formControlName]="formFields[6]">
+            <mat-icon matSuffix (click)="showRepeatPassword = !showRepeatPassword">
+                <fa-icon [icon]="showRepeatPassword ? faEyeSlash : faEye"></fa-icon>
+            </mat-icon>
         </mat-form-field>
     
         <mat-form-field appearance="fill">
             <mat-label> {{ titleForm[7] }} </mat-label>
             <mat-select [formControlName]="formFields[7]">
-                <mat-option value="1">Administrador</mat-option>
-                <mat-option value="2">Profecional de convenios</mat-option>
-                <mat-option value="3">Director juridico</mat-option>
-                <mat-option value="4">Vicerectiria</mat-option>
-                <mat-option value="5">Gestor ante la UIS</mat-option>
-                <mat-option value="6">Director relext</mat-option>
-                <mat-option value="7">Rectoria</mat-option>
-                <mat-option value="8">Institucion cooperante</mat-option>
-                <mat-option value="9">Consejo academico</mat-option>
+                <mat-option *ngFor="let i of roles" [value]="i.Id"> {{ i.Nombre }} </mat-option>
             </mat-select>
         </mat-form-field>
     </form>

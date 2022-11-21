@@ -19,3 +19,10 @@ export interface IUserTable {
     Password?: string;
     Roles: string;
 }
+
+export interface ITypeModal<T> {
+    type: TypeModal,
+    data: T
+}
+
+export type TypeModal = 'CREATE' | 'EDIT' | 'ALERT';
