@@ -1,13 +1,15 @@
 <div class="login-container">
-  <div class="mb-3">
-    <label for="email" class="form-label">Correo Electrónico</label>
-    <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo">
-  </div>
-  <div class="mb-3">
-    <label for="password" class="form-label">Contraseña</label>
-    <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña">
-  </div>
-  <div class="mb-3">
-    <button (click)="goToContinue()" type="submit" class="btn btn-primary">Iniciar Sesión</button>
-  </div>
+  <form [formGroup]="formGroup">
+    <div class="mb-3">
+      <label for="email" class="form-label">Correo Electrónico</label>
+      <input type="email" class="form-control" id="email" placeholder="Ingresa tu correo" [formControlName]="formFields[0]">
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Contraseña</label>
+      <input type="password" class="form-control" id="password" placeholder="Ingresa tu contraseña" [formControlName]="formFields[1]">
+    </div>
+    <div class="mb-3">
+      <button [disabled]="formGroup.invalid" (click)="goToContinue()" type="submit" class="btn btn-primary">Iniciar Sesión</button>
+    </div>
+  </form>
 </div>

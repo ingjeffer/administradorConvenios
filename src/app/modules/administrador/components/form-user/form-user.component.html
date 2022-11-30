@@ -10,13 +10,6 @@
             <input type="number" matInput [readonly]="typeForm === 'EDIT'" [formControlName]="formFields[0]">
         </mat-form-field>
         <mat-form-field appearance="fill">
-            <mat-label> {{ titleForm[1] }} </mat-label>
-            <mat-select [formControlName]="formFields[1]">
-                <mat-option value="CC">Cédula de Ciudadanía</mat-option>
-                <mat-option value="PT">Pasaporte</mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="fill">
             <mat-label> {{ titleForm[2] }} </mat-label>
             <input matInput [formControlName]="formFields[2]">
         </mat-form-field>
@@ -32,19 +25,21 @@
         </mat-form-field>
     
         <mat-form-field appearance="fill">
-            <mat-label> {{ titleForm[5] }} </mat-label>
+            <mat-label> {{ titleForm[5] }} 6 dig </mat-label>
             <input [type]="showPassword ? 'text' : 'password'" matInput [formControlName]="formFields[5]">
             <mat-icon matSuffix (click)="showPassword = !showPassword">
                 <fa-icon [icon]="showPassword ? faEyeSlash : faEye"></fa-icon>
             </mat-icon>
+            <small class="text-danger text-repeat" *ngIf="passwordMatchError">La contraseña no coincide</small>
         </mat-form-field>
     
         <mat-form-field appearance="fill">
-            <mat-label> {{ titleForm[6] }} </mat-label>
+            <mat-label> {{ titleForm[6] }} 6 dig </mat-label>
             <input [type]="showRepeatPassword ? 'text' : 'password'" matInput [formControlName]="formFields[6]">
             <mat-icon matSuffix (click)="showRepeatPassword = !showRepeatPassword">
                 <fa-icon [icon]="showRepeatPassword ? faEyeSlash : faEye"></fa-icon>
             </mat-icon>
+            <small class="text-danger text-repeat" *ngIf="passwordMatchError">La contraseña no coincide</small>
         </mat-form-field>
     
         <mat-form-field appearance="fill">

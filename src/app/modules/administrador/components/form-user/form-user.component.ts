@@ -1,13 +1,14 @@
-import { TypeModal } from './../../entities/user.interface';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
+import { Subject, takeUntil } from 'rxjs';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
-import { IRoles, ITypeModal, IUser } from '@modules/administrador/entities';
+import { PASSWORD_MAX_LENGTH } from '@const/contants';
+import { CustomValidators } from '@helpers/index';
+import { IRoles, ITypeModal, IUser, TypeModal } from '@modules/administrador/entities';
 import { AdministradorService } from '@modules/administrador/services';
-import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-form-user',
@@ -37,7 +38,7 @@ export class FormUserComponent implements OnInit, OnDestroy {
   faEye = faEye;
   faEyeSlash = faEyeSlash;
 
-  private _passwordLength = 6;
+  private _passwordLength = PASSWORD_MAX_LENGTH;
   private _destroy$ = new Subject();
 
   constructor(
@@ -94,18 +95,26 @@ export class FormUserComponent implements OnInit, OnDestroy {
   private _createForm() {
     this.formGroup = new FormGroup({
       [this.formFields[0]]: new FormControl('', [Validators.required]),
-      [this.formFields[1]]: new FormControl('', [Validators.required]),
+      [this.formFields[1]]: new FormControl('CC', [Validators.required]),
       [this.formFields[2]]: new FormControl('', [Validators.required]),
       [this.formFields[3]]: new FormControl('', [Validators.required]),
       [this.formFields[4]]: new FormControl('', [Validators.required, Validators.email]),
       [this.formFields[5]]: new FormControl('', [Validators.required, Validators.maxLength(this._passwordLength), Validators.minLength(this._passwordLength)]),
       [this.formFields[6]]: new FormControl('', [Validators.required, Validators.maxLength(this._passwordLength), Validators.minLength(this._passwordLength)]),
       [this.formFields[7]]: new FormControl('', [Validators.required]),
-    });
+    }, 
+      [CustomValidators.MatchValidator(this.formFields[5], this.formFields[6])]
+    );
   }
 
+  get passwordMatchError() {
+    return (
+      this.formGroup.getError('mismatch') &&
+      this.formGroup.get(this.formFields[6])?.touched
+    );
+  }
+  
   private _setFormValues(user: IUser) {
     this.formGroup.setValue(user);
   }
-
 }
