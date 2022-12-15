@@ -1,0 +1,106 @@
+<div class="form-user-cont">
+    <h1 mat-dialog-title>Datos del Usuario</h1>
+    <form class="form-user" [formGroup]="formGroup">
+        <mat-form-field appearance="fill">
+            <mat-label> {{ titleForm[0] }} 
+                <ng-container *ngIf="typeForm === 'EDIT'">
+                    <span class="text-danger">Solo lectura</span>
+                </ng-container>
+            </mat-label>
+            <input matInput [readonly]="typeForm === 'EDIT'" [formControlName]="formFields[0]">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label> {{ titleForm[1] }} </mat-label>
+            <input matInput [formControlName]="formFields[1]">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label> {{ titleForm[2] }} </mat-label>
+            <input matInput [formControlName]="formFields[2]">
+        </mat-form-field>
+    
+        <mat-form-field appearance="fill">
+            <mat-label> {{ titleForm[3] }} </mat-label>
+            <input matInput [formControlName]="formFields[3]">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label> {{ titleForm[4] }} </mat-label>
+            <mat-select [formControlName]="formFields[4]">
+                <mat-option [value]="'Marco'"> Marco </mat-option>
+                <mat-option [value]="'Especifico'"> Especifico </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+            <mat-label> {{ titleForm[5] }} </mat-label>
+            <mat-select [formControlName]="formFields[5]">
+                <mat-option [value]="'Movilidad de profesores'"> Movilidad de profesores </mat-option>
+                <mat-option [value]="'Intercambio de Estudiantes de Pregrado y/o Postgrado'"> Intercambio de Estudiantes de Pregrado y/o Postgrado </mat-option>
+                <mat-option [value]="'Cotutela de tesis doctoral'"> Cotutela de tesis doctoral </mat-option>
+                <mat-option [value]="'Convenio de Doble Titulacion'"> Convenio de Doble Titulacion </mat-option>
+                <mat-option [value]="'Otro'"> Otro </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <ng-container *ngIf="beneficiosAlias?.value === 'Otro'">
+            <mat-form-field appearance="fill">
+                <mat-label> Cuál otro {{ titleForm[5] }}? </mat-label>
+                <input matInput #beneficioInput>
+            </mat-form-field>
+        </ng-container>
+
+        <!-- <mat-form-field appearance="fill">
+            <mat-label> {{ titleForm[5] }} </mat-label>
+            <input matInput [formControlName]="formFields[5]">
+        </mat-form-field> -->
+
+        <mat-form-field appearance="fill">
+            <mat-label> {{ titleForm[6] }} </mat-label>
+            <mat-select [formControlName]="formFields[6]">
+                <mat-option [value]="'Profesor'"> Profesor </mat-option>
+                <mat-option [value]="'Administrativo'"> Administrativo </mat-option>
+                <mat-option [value]="'Estudiantes de Postgrado'"> Estudiantes de Postgrado </mat-option>
+                <mat-option [value]="'Estudiantes de Pregrado'"> Estudiantes de Pregrado </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <!-- <mat-form-field appearance="fill">
+            <mat-label> {{ titleForm[6] }} </mat-label>
+            <input matInput [formControlName]="formFields[6]">
+        </mat-form-field> -->
+    
+        <mat-form-field appearance="fill">
+            <mat-label> {{ titleForm[7] }} </mat-label>
+            <mat-select [formControlName]="formFields[7]">
+                <mat-option [value]="'Investigacion'"> Investigacion </mat-option>
+                <mat-option [value]="'Propiedad Intelectual'"> Propiedad Intelectual </mat-option>
+                <mat-option [value]="'Resultados Protegibles'"> Resultados Protegibles </mat-option>
+                <mat-option [value]="'Doble Titulacion'"> Doble Titulacion </mat-option>
+                <mat-option [value]="'Homologacion de asignaturas o crediros cursados / Intercambio Academico'"> Homologacion de asignaturas o crediros cursados / Intercambio Academico </mat-option>
+                <mat-option [value]="'Otro'"> Otro </mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <ng-container *ngIf="caracterizacionAlias?.value === 'Otro'">
+            <mat-form-field appearance="fill">
+                <mat-label> Cuál otro {{ titleForm[7] }}? </mat-label>
+                <input matInput #caracterizacionInput>
+            </mat-form-field>
+        </ng-container>
+    
+        <!-- <mat-form-field appearance="fill">
+            <mat-label> {{ titleForm[7] }} </mat-label>
+            <mat-select [formControlName]="formFields[7]">
+                <mat-option *ngFor="let i of roles" [value]="i.id"> {{ i.nombre }} </mat-option>
+            </mat-select>
+        </mat-form-field> -->
+    </form>
+
+    <div class="col-12 d-flex justify-content-center">
+        <button class="mx-2" mat-raised-button (click)="dialogRef.close()">Cancelar</button>
+        <button class="mx-2" [disabled]="formGroup.invalid" mat-raised-button (click)="save()">Guardar</button>
+    </div>
+
+</div>

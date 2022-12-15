@@ -9,7 +9,7 @@ import { faEdit, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Subject, takeUntil } from 'rxjs';
 
 import { IModalData, ModalConfirmService } from '@core/modal-confirm';
-import { IUser, IUserTable, TypeModal } from '@modules/administrador/entities';
+import { IUserTable, TypeModal } from '@modules/administrador/entities';
 import { AdministradorService } from '@modules/administrador/services';
 import { FormUserComponent } from '..';
 
@@ -23,7 +23,7 @@ export class ListUserComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns: string[] = ['Id', 'Nombres', 'Apellidos', 'TipoId', 'Email', 'Roles', 'Options'];
+  displayedColumns: string[] = ['id', 'nombres', 'apellidos', 'tipoId', 'email', 'roles', 'Options'];
   titleColumns: string[] = ['Cédula', 'Tipo de Documento', 'Nombres', 'Apellidos', 'Correo', 'Rol', 'Opciones'];
   dataSource: MatTableDataSource<IUserTable>;
 
@@ -36,7 +36,8 @@ export class ListUserComponent implements OnInit, OnDestroy {
   constructor(
     private _adminService: AdministradorService,
     private _modalService: ModalConfirmService,
-    private _dialog: MatDialog) { }
+    private _dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this._dialog.afterAllClosed
@@ -77,15 +78,20 @@ export class ListUserComponent implements OnInit, OnDestroy {
     });
   }
 
-  openFormModal(type: TypeModal, data?: IUser) {
+  openFormModal(type: TypeModal, data?: IUserTable) {
+    const newData = {
+      ...data,
+      roleId: data?.rol.id,
+      repeatPassword: data?.password,
+    };
+
+    delete newData.rol;
+    
     this._dialog.open(FormUserComponent, {
       width: '500px',
       data: {
         type,
-        data: {
-          ...data,
-          RepeatPassword: data?.Password,
-        }
+        data: newData,
       }
     });
   }
@@ -96,15 +102,18 @@ export class ListUserComponent implements OnInit, OnDestroy {
       .subscribe(this._mapUserResponse.bind(this));
   }
 
-  private _mapUserResponse(res: IUser[]) {
-    const data: IUserTable[] = res.map((us: IUser) => ({
-      Id: us.Id,
-      Nombres: us.Nombres,
-      Apellidos: us.Apellidos,
-      TipoId: us.TipoId,
-      Email: us.Email,
-      Password: us.Password,
-      Roles: us.Roles.length > 0 ? us.Roles[0].Nombre : '',
+  private _mapUserResponse(res: IUserTable[]) {
+    const data: IUserTable[] = res.map((us: IUserTable) => ({
+      id: us.id,
+      nombres: us.nombres,
+      apellidos: us.apellidos,
+      tipoId: us.tipoId,
+      email: us.email,
+      password: us.password,
+      rol: {
+        id: us.rol.id,
+        nombre: us.rol.nombre
+      }
     }));
     this.dataSource = new MatTableDataSource<IUserTable>(data);
     this._setupDataSource();
@@ -114,8 +123,8 @@ export class ListUserComponent implements OnInit, OnDestroy {
     console.log(confirm);
     
     if (confirm) {
-      const { Id, TipoId } = this._userSelected;
-      this._adminService.deleteUser(TipoId, Id).subscribe(this._responseDelete.bind(this));
+      const { id, tipoId } = this._userSelected;
+      this._adminService.deleteUser(tipoId, id).subscribe(this._responseDelete.bind(this));
     }
   }
 

@@ -1,23 +1,26 @@
 import { IRoles } from ".";
 
 export interface IUser {
-    Id: string;
-    Nombres: string;
-    Apellidos: string;
-    TipoId: string;
-    Email: string;
-    Password: string;
-    Roles: IRoles[];
+    id: string;
+    nombres: string;
+    apellidos: string;
+    tipoId: string;
+    email: string;
+    password: string;
+    roleId: number;
 }
 
 export interface IUserTable {
-    Id: string;
-    Nombres: string;
-    Apellidos: string;
-    TipoId: string;
-    Email: string;
-    Password?: string;
-    Roles: string;
+    id: string;
+    nombres: string;
+    apellidos: string;
+    tipoId: string;
+    email: string;
+    password?: string;
+    rol: {
+        id: number;
+        nombre: string;
+    };
 }
 
 export interface ITypeModal<T> {

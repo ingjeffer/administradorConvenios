@@ -1,7 +1,7 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { IS_LOGGED, PASSWORD_MAX_LENGTH } from '@const/index';
+import { IS_LOGGED, PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH } from '@const/index';
 import { LoginService } from '@modules/login/services';
 import { removeSession, setSession } from '@helpers/index';
 
@@ -13,7 +13,7 @@ import { removeSession, setSession } from '@helpers/index';
 })
 export class LoginComponent implements OnInit {
 
-  formFields: string[] = ['Email', 'Password'];
+  formFields: string[] = ['email', 'password'];
 
   formGroup: FormGroup;
 
@@ -27,7 +27,6 @@ export class LoginComponent implements OnInit {
 
   goToContinue(): void {
     const values = this.formGroup.value;
-    console.log(values);
     this._loginService.session(values).subscribe((data) => {
       this._router.navigate(['']);
       setSession(IS_LOGGED, true);
@@ -37,7 +36,7 @@ export class LoginComponent implements OnInit {
   private _createForm() {
     this.formGroup = new FormGroup({
       [this.formFields[0]]: new FormControl('', [Validators.required, Validators.email]),
-      [this.formFields[1]]: new FormControl('', [Validators.required, Validators.maxLength(PASSWORD_MAX_LENGTH), Validators.minLength(PASSWORD_MAX_LENGTH)]),
+      [this.formFields[1]]: new FormControl('', [Validators.required, Validators.maxLength(PASSWORD_MAX_LENGTH), Validators.minLength(PASSWORD_MIN_LENGTH)]),
     });
   }
 }

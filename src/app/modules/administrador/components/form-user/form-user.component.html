@@ -45,7 +45,7 @@
         <mat-form-field appearance="fill">
             <mat-label> {{ titleForm[7] }} </mat-label>
             <mat-select [formControlName]="formFields[7]">
-                <mat-option *ngFor="let i of roles" [value]="i.Id"> {{ i.Nombre }} </mat-option>
+                <mat-option *ngFor="let i of roles" [value]="i.id"> {{ i.nombre }} </mat-option>
             </mat-select>
         </mat-form-field>
     </form>

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
-import { IUser } from '../entities';
+import { IRoles, IUser, IUserTable } from '../entities';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +10,12 @@ export class AdministradorService {
 
   constructor(private _http: HttpClient) { }
 
+  listRoles() {
+    return this._http.get<IRoles[]>(environment.api.base + environment.api.roles);
+  }
+
   listUser() {
-    return this._http.get<IUser[]>(environment.api.base + environment.api.user);
+    return this._http.get<IUserTable[]>(environment.api.base + environment.api.user);
   }
 
   createUser(user: IUser) {

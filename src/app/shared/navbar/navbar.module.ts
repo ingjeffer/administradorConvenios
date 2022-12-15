@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from './navbar.component';
+import { GestorRoutingModule } from '@modules/gestor/gestor-routing.module';
 
 
 
@@ -9,7 +10,8 @@ import { NavbarComponent } from './navbar.component';
     NavbarComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    GestorRoutingModule
   ],
   exports: [
     NavbarComponent

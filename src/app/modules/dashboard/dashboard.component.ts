@@ -11,7 +11,7 @@ export class DashboardComponent implements OnInit {
   constructor(private _router: Router) { }
 
   ngOnInit(): void {
-    this._router.navigate(['/admin']);
+    this._router.navigate(['/gestor']);
   }
 
 }

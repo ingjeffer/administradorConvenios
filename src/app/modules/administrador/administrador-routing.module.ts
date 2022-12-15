@@ -9,10 +9,11 @@ const routes: Routes = [
     component: AdministradorComponent,
     children: [
       { path: '', component: ListUserComponent },
-      { path: 'form', component: FormUserComponent },
     ]
   }
-];@NgModule({
+];
+
+@NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })

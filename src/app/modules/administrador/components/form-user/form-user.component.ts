@@ -5,7 +5,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
-import { PASSWORD_MAX_LENGTH } from '@const/contants';
+import { PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH } from '@const/contants';
 import { CustomValidators } from '@helpers/index';
 import { IRoles, ITypeModal, IUser, TypeModal } from '@modules/administrador/entities';
 import { AdministradorService } from '@modules/administrador/services';
@@ -18,18 +18,8 @@ import { AdministradorService } from '@modules/administrador/services';
 export class FormUserComponent implements OnInit, OnDestroy {
 
   titleForm: string[] = ['Cédula', 'Tipo de Documento', 'Nombres', 'Apellidos', 'Correo', 'Contraseña', 'Repetir Contraseña', 'Rol'];
-  formFields: string[] = ['Id', 'TipoId', 'Nombres', 'Apellidos', 'Email', 'Password', 'RepeatPassword', 'Roles'];
-  roles: IRoles[] = [
-    { Id: 1, Nombre: 'Administrador' },
-    { Id: 2, Nombre: 'Profecional de convenios' },
-    { Id: 3, Nombre: 'Director juridico' },
-    { Id: 4, Nombre: 'Vicerectiria' },
-    { Id: 5, Nombre: 'Gestor ante la UIS' },
-    { Id: 6, Nombre: 'Director relext' },
-    { Id: 7, Nombre: 'Rectoria' },
-    { Id: 8, Nombre: 'Institucion cooperante' },
-    { Id: 9, Nombre: 'Consejo academico' },
-  ];
+  formFields: string[] = ['id', 'tipoId', 'nombres', 'apellidos', 'email', 'password', 'repeatPassword', 'roleId'];
+  roles: IRoles[] = [];
   formGroup: FormGroup;
   typeForm: TypeModal;
 
@@ -38,7 +28,8 @@ export class FormUserComponent implements OnInit, OnDestroy {
   faEye = faEye;
   faEyeSlash = faEyeSlash;
 
-  private _passwordLength = PASSWORD_MAX_LENGTH;
+  private _passwordMaxLength = PASSWORD_MAX_LENGTH;
+  private _passwordMinLength = PASSWORD_MIN_LENGTH;
   private _destroy$ = new Subject();
 
   constructor(
@@ -49,6 +40,9 @@ export class FormUserComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit(): void {
+    this._adminService.listRoles().subscribe((data) => {
+      this.roles = data;
+    });
     this.dialogRef.afterOpened()
     .pipe(takeUntil(this._destroy$))
     .subscribe(() => {
@@ -66,21 +60,16 @@ export class FormUserComponent implements OnInit, OnDestroy {
 
   save() {
     const values = this.formGroup.value;
-    const { Id, Nombres, Apellidos, Password, Email, Roles, TipoId } = values;
+    const { id, nombres, apellidos, password, email, roleId, tipoId } = values;
     
     const user: IUser = {
-      Id: `${Id}`,
-      Nombres,
-      Apellidos,
-      TipoId,
-      Email,
-      Password,
-      Roles: [
-        {
-          Id: 1,
-          Nombre: 'admin'
-        }
-      ]
+      id: `${id}`,
+      nombres,
+      apellidos,
+      tipoId,
+      email,
+      password,
+      roleId 
     }
     
     this._adminService[this.typeForm === 'CREATE' ? 'createUser' : 'updateUser'](user)
@@ -99,8 +88,8 @@ export class FormUserComponent implements OnInit, OnDestroy {
       [this.formFields[2]]: new FormControl('', [Validators.required]),
       [this.formFields[3]]: new FormControl('', [Validators.required]),
       [this.formFields[4]]: new FormControl('', [Validators.required, Validators.email]),
-      [this.formFields[5]]: new FormControl('', [Validators.required, Validators.maxLength(this._passwordLength), Validators.minLength(this._passwordLength)]),
-      [this.formFields[6]]: new FormControl('', [Validators.required, Validators.maxLength(this._passwordLength), Validators.minLength(this._passwordLength)]),
+      [this.formFields[5]]: new FormControl('', [Validators.required, Validators.maxLength(this._passwordMaxLength), Validators.minLength(this._passwordMinLength)]),
+      [this.formFields[6]]: new FormControl('', [Validators.required, Validators.maxLength(this._passwordMaxLength), Validators.minLength(this._passwordMinLength)]),
       [this.formFields[7]]: new FormControl('', [Validators.required]),
     }, 
       [CustomValidators.MatchValidator(this.formFields[5], this.formFields[6])]
@@ -115,6 +104,7 @@ export class FormUserComponent implements OnInit, OnDestroy {
   }
   
   private _setFormValues(user: IUser) {
+    console.log(user);
     this.formGroup.setValue(user);
   }
 }

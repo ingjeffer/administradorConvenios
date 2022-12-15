@@ -6,7 +6,8 @@ const routes: Routes = [
   {
     path: '', component: DashboardComponent,
     children: [
-      { path: 'admin' , loadChildren: () => import('@modules/administrador/administrador.module').then((m) => m.AdministradorModule) },
+      { path: 'admin', loadChildren: () => import('@modules/administrador/administrador.module').then((m) => m.AdministradorModule) },
+      { path: 'gestor', loadChildren: () => import('@modules/gestor/gestor.module').then((m) => m.GestorModule) },
     ]
   }
 ];
