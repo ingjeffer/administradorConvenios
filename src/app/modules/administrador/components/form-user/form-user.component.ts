@@ -104,7 +104,6 @@ export class FormUserComponent implements OnInit, OnDestroy {
   }
   
   private _setFormValues(user: IUser) {
-    console.log(user);
     this.formGroup.setValue(user);
   }
 }

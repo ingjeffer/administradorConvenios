@@ -1,7 +1,7 @@
-<div class="form-user-cont">
-    <h1 mat-dialog-title>Datos del Usuario</h1>
-    <form class="form-user" [formGroup]="formGroup">
-        <mat-form-field appearance="fill">
+<div class="form-gestor-cont">
+    <h1 mat-dialog-title>Datos del Convenio</h1>
+    <form class="form-gestor" [formGroup]="formGroup">
+        <mat-form-field appearance="fill" class="d-none">
             <mat-label> {{ titleForm[0] }} 
                 <ng-container *ngIf="typeForm === 'EDIT'">
                     <span class="text-danger">Solo lectura</span>
@@ -51,11 +51,6 @@
             </mat-form-field>
         </ng-container>
 
-        <!-- <mat-form-field appearance="fill">
-            <mat-label> {{ titleForm[5] }} </mat-label>
-            <input matInput [formControlName]="formFields[5]">
-        </mat-form-field> -->
-
         <mat-form-field appearance="fill">
             <mat-label> {{ titleForm[6] }} </mat-label>
             <mat-select [formControlName]="formFields[6]">
@@ -65,11 +60,6 @@
                 <mat-option [value]="'Estudiantes de Pregrado'"> Estudiantes de Pregrado </mat-option>
             </mat-select>
         </mat-form-field>
-
-        <!-- <mat-form-field appearance="fill">
-            <mat-label> {{ titleForm[6] }} </mat-label>
-            <input matInput [formControlName]="formFields[6]">
-        </mat-form-field> -->
     
         <mat-form-field appearance="fill">
             <mat-label> {{ titleForm[7] }} </mat-label>
@@ -89,13 +79,48 @@
                 <input matInput #caracterizacionInput>
             </mat-form-field>
         </ng-container>
-    
-        <!-- <mat-form-field appearance="fill">
-            <mat-label> {{ titleForm[7] }} </mat-label>
-            <mat-select [formControlName]="formFields[7]">
-                <mat-option *ngFor="let i of roles" [value]="i.id"> {{ i.nombre }} </mat-option>
-            </mat-select>
-        </mat-form-field> -->
+
+        <div class="form-gestor" [formGroupName]="formFields[8]">
+
+            <mat-form-field appearance="fill">
+                <mat-label> {{ titleInfoForm[0] }} </mat-label>
+                <input matInput [formControlName]="formInfoFields[0]">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label>{{ titleInfoForm[1] }}</mat-label>
+                <input matInput [matDatepicker]="picker" [formControlName]="formInfoFields[1]">
+                <mat-hint> DD/MM/YYYY </mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label> {{ titleInfoForm[2] }} </mat-label>
+                <input matInput [formControlName]="formInfoFields[2]">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label> {{ titleInfoForm[3] }} </mat-label>
+                <mat-select [formControlName]="formInfoFields[3]">
+                    <mat-option [value]="'Profesor titular'"> Profesor titular </mat-option>
+                    <mat-option [value]="'Director UAA'"> Director UAA </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label> {{ titleInfoForm[4] }} </mat-label>
+                <input type="email" matInput [formControlName]="formInfoFields[4]">
+            </mat-form-field>
+
+            <mat-form-field appearance="fill">
+                <mat-label> {{ titleInfoForm[5] }} </mat-label>
+                <input matInput [formControlName]="formInfoFields[5]">
+            </mat-form-field>
+
+        </div>
+
+
     </form>
 
     <div class="col-12 d-flex justify-content-center">

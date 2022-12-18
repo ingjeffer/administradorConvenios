@@ -9,8 +9,8 @@ export const environment = {
     user: '/usuario',
     roles: '/roles',
     session: '/session',
-    convenios: '/convenios',
-    pdfConvenios: '/pdf/convenios',
+    convenios: '/convenio',
+    pdfConvenios: '/convenio/pdf',
   }
 };
 

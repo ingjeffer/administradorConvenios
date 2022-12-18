@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ModalConfirmService } from '@core/modal-confirm';
-import { faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faDownload, faEdit } from '@fortawesome/free-solid-svg-icons';
 import { TypeModal } from '@modules/administrador/entities';
 import { IGestor, IGestorTable } from '@modules/gestor/entities';
 import { GestorService } from '@modules/gestor/services';
@@ -27,6 +27,7 @@ export class ListGestorComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<IGestorTable>;
 
   faEdit = faEdit;
+  faDownload = faDownload;
 
   private _destroy$ = new Subject();
   
@@ -37,9 +38,9 @@ export class ListGestorComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this._gestorService.listConvenios()
+    this._dialog.afterAllClosed
     .pipe(takeUntil(this._destroy$))
-    .subscribe(this._mapGestorResponse.bind(this));
+    .subscribe(this._callConvenios.bind(this));
   }
 
   ngOnDestroy(): void {
@@ -66,6 +67,15 @@ export class ListGestorComponent implements OnInit, OnDestroy {
     });
   }
 
+  downloadPdf(id: any) {
+    console.log(id);
+
+    this._gestorService.getPdf(id).subscribe((data) => {
+      console.log(data);
+    });
+    
+  }
+
 
   private _mapGestorResponse(res: IGestor[]) {
     this.dataSource = new MatTableDataSource<IGestorTable>(res);
@@ -77,4 +87,11 @@ export class ListGestorComponent implements OnInit, OnDestroy {
     this.dataSource.sort = this.sort;
   }
 
+  private _callConvenios() {
+    this._gestorService.listConvenios()
+    .pipe(takeUntil(this._destroy$))
+    .subscribe(this._mapGestorResponse.bind(this));
+  }
+
 }
+

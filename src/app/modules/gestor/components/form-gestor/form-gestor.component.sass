@@ -1,0 +1,18 @@
+.form-gestor-cont
+    .form-gestor
+        display: flex
+        flex-direction: column
+        align-items: center
+        .text-repeat
+            font-size: 0.5rem
+
+    ::ng-deep 
+        .mat-form-field-infix
+            display: flex
+
+@media screen and (min-width: 800px)
+    .form-gestor-cont
+        .form-gestor
+            flex-direction: row
+            flex-wrap: wrap
+            justify-content: space-around

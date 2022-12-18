@@ -8,7 +8,16 @@
     },
     "changeOrigin": false
   },
-  "/api/convenios/*": {
+  "/api/session/*": {
+    "target": "http://localhost:8081/api/",
+    "secure": false,
+    "logLevel": "debug",
+    "pathRewrite": {
+        "^/api": ""
+    },
+    "changeOrigin": false
+  },
+  "/api/convenio/*": {
     "target": "http://localhost:8082/api/",
     "secure": false,
     "logLevel": "debug",
