@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
 import { IGestor } from '../entities';
@@ -27,6 +27,9 @@ export class GestorService {
   }
 
   getPdf(id: string) {
-    return this._http.get<any>(`${environment.api.base + environment.api.pdfConvenios}/${id}`);
+    let headers = new HttpHeaders();
+    headers = headers.set('Accept', 'application/pdf');
+    return this._http.get<any>(`${environment.api.base + environment.api.pdfConvenios}/${id}`, 
+    { headers, responseType: 'blob' as 'json' });
   }
 }
