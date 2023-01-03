@@ -1,3 +1,5 @@
+import jwt_decode from 'jwt-decode';
+
 const TOKEN = 'TOKEN';
 
 export function setSession(key: string, value: any) {
@@ -22,4 +24,8 @@ export function removeSession(key: string) {
 
 export function clearAllSession() {
     sessionStorage.clear();
+}
+
+export function decodeToken(): any {
+    return jwt_decode(getToken());
 }

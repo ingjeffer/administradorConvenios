@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { NavigatePath } from '@const/navigate';
-import { pathUtils } from '@helpers/path-utils';
+import { mapTokenToPath } from '@helpers/index';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,7 +12,8 @@ export class DashboardComponent implements OnInit {
   constructor(private _router: Router) { }
 
   ngOnInit(): void {
-    this._router.navigate([pathUtils(NavigatePath.Gestor)]);
+    const path = mapTokenToPath();
+    this._router.navigate([path]);
   }
 
 }

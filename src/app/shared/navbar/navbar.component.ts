@@ -1,7 +1,7 @@
 import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { clearAllSession, pathUtils } from '@helpers/index';
-import { NavigatePath } from '@const/navigate';
+import { clearAllSession, mapTokenToPath, pathUtils } from '@helpers/index';
+import { INavigatePath, NavigatePath } from '@const/navigate';
 
 @Component({
   selector: 'app-navbar',
@@ -12,12 +12,18 @@ export class NavbarComponent implements OnInit {
 
   constructor(private _router: Router) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   logout() {
     clearAllSession();
     this._router.navigate([pathUtils(NavigatePath.Login)]);
   }
 
+  get pathNavigate(): INavigatePath {
+    return NavigatePath
+  }
+
+  get path(): string {
+    return mapTokenToPath();
+  }
 }
