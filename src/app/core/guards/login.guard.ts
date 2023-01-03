@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
-import { IS_LOGGED } from '@const/contants';
-import { getSession } from '@helpers/session-storage';
+import { NavigatePath } from '@const/index';
+import { pathUtils, getToken } from '@helpers/index';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -12,10 +12,10 @@ export class LoginGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    if (!!getSession(IS_LOGGED)) {
+    if (!!getToken()) {
       return true;
     }
-    this._router.navigate(['/login']);
+    this._router.navigate([pathUtils(NavigatePath.Login)]);
     return false;
   }
   

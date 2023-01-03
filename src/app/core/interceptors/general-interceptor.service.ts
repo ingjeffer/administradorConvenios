@@ -1,5 +1,8 @@
+import { NavigatePath } from '@const/navigate';
+import { Router } from '@angular/router';
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { getToken, pathUtils, setToken } from "@helpers/index";
 
 import { NgxSpinnerService } from "ngx-spinner";
 import { ToastrService } from "ngx-toastr";
@@ -12,24 +15,25 @@ export class GeneralInterceptorService implements HttpInterceptor {
         timeOut: 3500,
         closeButton: true,
     };
+    private _regToken = /\"/g
 
-    constructor(private _toastr: ToastrService, private _spinner: NgxSpinnerService) { }
+    constructor(private _toastr: ToastrService, private _spinner: NgxSpinnerService, private _router: Router) { }
 
     intercept(req: HttpRequest<any> | any, next: HttpHandler): Observable<HttpEvent<any>> {
         console.log('=== intercept ===');
         this._spinner.show();
 
-        // const token = localStorage.getItem('token');
+        const token = getToken();
 
         let request = req;                
 
-        // if (token) {
-        //     request = req.clone({
-        //         setHeaders: {
-        //             authorization: `Bearer ${token}`
-        //         }
-        //     });
-        // }
+        if (token) {
+            request = req.clone({
+                setHeaders: {
+                    authorization: `Bearer ${token.replace(this._regToken, '')}`
+                }
+            });
+        }
 
         return next.handle(request)
 	    .pipe(
@@ -43,6 +47,8 @@ export class GeneralInterceptorService implements HttpInterceptor {
 	            // console.log(event);
                 console.log(request.method);
                 if (event.status === 200 && request.method !== 'GET') {
+                    const { token } = event.body;
+                    setToken(token);
                     this._toastr.success(
                         'La operación se ejecutó exitosamente', 
                         `Error ${event.status} - ${event.statusText}`,
@@ -62,6 +68,10 @@ export class GeneralInterceptorService implements HttpInterceptor {
                     `Error ${err.status} - ${err.statusText}`,
                     this._toastOptions,
                 );
+
+                if (err.status === 401) {
+                    this._router.navigate([pathUtils(NavigatePath.Login)]);
+                }
 
                 return throwError((err: any) => new Error(err));
 	        })

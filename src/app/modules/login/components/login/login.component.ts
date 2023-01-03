@@ -1,9 +1,10 @@
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
-import { IS_LOGGED, PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH } from '@const/index';
+import { NavigatePath, PASSWORD_MAX_LENGTH, PASSWORD_MIN_LENGTH } from '@const/index';
 import { LoginService } from '@modules/login/services';
-import { removeSession, setSession } from '@helpers/index';
+import { pathUtils, setToken } from '@helpers/index';
+import { ILoginResponse } from '@modules/login/entities';
 
 @Component({
   selector: 'app-login',
@@ -21,15 +22,13 @@ export class LoginComponent implements OnInit {
     this._createForm();
   }
 
-  ngOnInit(): void {
-    removeSession(IS_LOGGED);
-  }
+  ngOnInit(): void {}
 
   goToContinue(): void {
     const values = this.formGroup.value;
-    this._loginService.session(values).subscribe((data) => {
-      this._router.navigate(['']);
-      setSession(IS_LOGGED, true);
+    this._loginService.session(values).subscribe((data: ILoginResponse) => {
+      setToken(data.token);
+      this._router.navigate([pathUtils(NavigatePath.Dashboard)]);
     });
   }
 

@@ -8,7 +8,7 @@ export const environment = {
     base: '/api',
     user: '/usuario',
     roles: '/roles',
-    session: '/session',
+    session: '/usuario/session',
     convenios: '/convenio',
     pdfConvenios: '/convenio/pdf',
   }

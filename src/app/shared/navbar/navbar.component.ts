@@ -1,4 +1,7 @@
+import { Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { clearAllSession, pathUtils } from '@helpers/index';
+import { NavigatePath } from '@const/navigate';
 
 @Component({
   selector: 'app-navbar',
@@ -7,9 +10,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(private _router: Router) { }
 
   ngOnInit(): void {
+  }
+
+  logout() {
+    clearAllSession();
+    this._router.navigate([pathUtils(NavigatePath.Login)]);
   }
 
 }

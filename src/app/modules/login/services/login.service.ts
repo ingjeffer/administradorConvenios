@@ -1,4 +1,4 @@
-import { ILoginRequest } from './../entities/login.interface';
+import { ILoginRequest, ILoginResponse } from './../entities/login.interface';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
@@ -9,7 +9,7 @@ export class LoginService {
   constructor(private _http: HttpClient) { }
 
   session(body: ILoginRequest) {
-    return this._http.post<any>(environment.api.base + environment.api.session, {
+    return this._http.post<ILoginResponse>(environment.api.base + environment.api.session, {
       ...body
     });
   }
