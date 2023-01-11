@@ -47,8 +47,6 @@ export class GeneralInterceptorService implements HttpInterceptor {
 	            // console.log(event);
                 console.log(request.method);
                 if (event.status === 200 && request.method !== 'GET') {
-                    const { token } = event.body;
-                    setToken(token);
                     this._toastr.success(
                         'La operación se ejecutó exitosamente', 
                         `Error ${event.status} - ${event.statusText}`,

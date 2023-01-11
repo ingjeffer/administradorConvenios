@@ -52,7 +52,6 @@ export class FormGestorComponent implements OnInit, OnDestroy {
   }
 
   save() {
-    console.log(this.beneficioInput.nativeElement.value);
     
     const { value } = this.formGroup;
     const req = {
