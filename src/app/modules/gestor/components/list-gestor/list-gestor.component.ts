@@ -22,8 +22,8 @@ export class ListGestorComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  titleColumns: string[] = ['Nombre Institución', 'Nombre del Convenio', 'Tipología del Convenio', 'Caracterizacion', 'Opciones'];
-  displayedColumns: string[] = ['nombreInstitucion', 'nombreConvenio', 'tipologiaConvenio', 'caracterizacion', 'options'];
+  titleColumns: string[] = ['Nombre Institución', 'Nombre del Convenio', 'Tipología del Convenio', 'Estado', 'Opciones'];
+  displayedColumns: string[] = ['nombreInstitucion', 'nombreConvenio', 'tipologiaConvenio', 'estado', 'options'];
   dataSource: MatTableDataSource<IGestorTable>;
 
   faEdit = faEdit;

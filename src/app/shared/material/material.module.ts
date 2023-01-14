@@ -9,6 +9,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+
 
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
@@ -27,6 +29,7 @@ import { MomentDateAdapter, MatMomentDateModule } from '@angular/material-moment
     MatDialogModule,
     MatDatepickerModule,
     MatMomentDateModule,
+    MatCheckboxModule,
     FontAwesomeModule,
   ],
   exports: [
@@ -38,6 +41,7 @@ import { MomentDateAdapter, MatMomentDateModule } from '@angular/material-moment
     MatSelectModule,
     MatDatepickerModule,
     MatMomentDateModule,
+    MatCheckboxModule,
     FontAwesomeModule,
   ],
   providers: [

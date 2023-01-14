@@ -7,6 +7,7 @@ import { GestorRoutingModule } from './gestor-routing.module';
 import { GestorComponent } from './gestor.component';
 import { FormGestorComponent, ListGestorComponent } from './components';
 import { GestorService } from './services';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { GestorService } from './services';
   imports: [
     CommonModule,
     GestorRoutingModule,
+    FormsModule,
     MaterialModule
   ],
   providers: [

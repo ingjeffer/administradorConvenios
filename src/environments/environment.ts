@@ -11,6 +11,7 @@ export const environment = {
     session: '/usuario/session',
     convenios: '/convenio',
     pdfConvenios: '/convenio/pdf',
+    firmarConvenios: '/convenio/firmar',
   }
 };
 

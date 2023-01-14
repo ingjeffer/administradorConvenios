@@ -22,6 +22,12 @@ export class GestorService {
     return this._http.post<IGestor>(environment.api.base + environment.api.convenios, convenio);
   }
 
+  firmarConvenio(file: File, id: string) {
+    const formData = new FormData(); 
+    formData.append('firma', file, file.name);
+    return this._http.post<IGestor>(`${environment.api.base + environment.api.firmarConvenios}/${id}`, formData);
+  }
+
   updateConvenio(convenio: IGestor) {
     return this._http.put<IGestor>(environment.api.base + environment.api.convenios, convenio);
   }

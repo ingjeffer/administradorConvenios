@@ -16,6 +16,9 @@ export interface IGestor {
     beneficiarios: string;
     caracterizacion: string;
     infoGestor: IGestor;
+    estado?: string;
+    firmaUrl: string;
+    observaciones: string;
 }
 
 export interface IGestorInfo {

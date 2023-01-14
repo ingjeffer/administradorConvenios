@@ -116,16 +116,27 @@
             <mat-form-field appearance="fill">
                 <mat-label> {{ titleInfoForm[5] }} </mat-label>
                 <input matInput [formControlName]="formInfoFields[5]">
-            </mat-form-field>
-
+            </mat-form-field>            
         </div>
 
+        <input type="hidden" [formControlName]="'estado'">
+
+        <ng-container class="my-2" *ngIf="typeForm === 'EDIT'">
+            <section class="form-group">
+                <mat-checkbox class="example-margin" [(ngModel)]="checkSignature" [ngModelOptions]="{standalone: true}">¿Desea editar la firma?</mat-checkbox>
+            </section>
+        </ng-container>
+
+        <div class="my-2" *ngIf="typeForm !== 'EDIT' || checkSignature">
+            <label for="formFile" class="form-label">Firmar</label>
+            <input class="form-control" type="file" id="formFile" [formControl]="formFile" (change)="onChange($event)">
+        </div>
 
     </form>
 
     <div class="col-12 d-flex justify-content-center">
         <button class="mx-2" mat-raised-button (click)="dialogRef.close()">Cancelar</button>
-        <button class="mx-2" [disabled]="formGroup.invalid" mat-raised-button (click)="save()">Guardar</button>
+        <button class="mx-2" [disabled]="formGroup.invalid || !formFile.value" mat-raised-button (click)="save()">Guardar</button>
     </div>
 
 </div>
