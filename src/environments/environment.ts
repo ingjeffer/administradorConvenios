@@ -12,6 +12,7 @@ export const environment = {
     convenios: '/convenio',
     pdfConvenios: '/convenio/pdf',
     firmarConvenios: '/convenio/firmar',
+    cambiarEstadoConvenios: '/convenio/cambiarEstado',
   }
 };
 

@@ -2,7 +2,7 @@
     <h1 mat-dialog-title>Datos del Convenio</h1>
     <form class="form-gestor" [formGroup]="formGroup">
         <mat-form-field appearance="fill" class="d-none">
-            <mat-label> {{ titleForm[0] }} 
+            <mat-label> {{ titleForm[0] }}
                 <ng-container *ngIf="typeForm === 'EDIT'">
                     <span class="text-danger">Solo lectura</span>
                 </ng-container>
@@ -19,7 +19,7 @@
             <mat-label> {{ titleForm[2] }} </mat-label>
             <input matInput [formControlName]="formFields[2]">
         </mat-form-field>
-    
+
         <mat-form-field appearance="fill">
             <mat-label> {{ titleForm[3] }} </mat-label>
             <input matInput [formControlName]="formFields[3]">
@@ -60,7 +60,7 @@
                 <mat-option [value]="'Estudiantes de Pregrado'"> Estudiantes de Pregrado </mat-option>
             </mat-select>
         </mat-form-field>
-    
+
         <mat-form-field appearance="fill">
             <mat-label> {{ titleForm[7] }} </mat-label>
             <mat-select [formControlName]="formFields[7]">
@@ -116,7 +116,7 @@
             <mat-form-field appearance="fill">
                 <mat-label> {{ titleInfoForm[5] }} </mat-label>
                 <input matInput [formControlName]="formInfoFields[5]">
-            </mat-form-field>            
+            </mat-form-field>
         </div>
 
         <input type="hidden" [formControlName]="'estado'">

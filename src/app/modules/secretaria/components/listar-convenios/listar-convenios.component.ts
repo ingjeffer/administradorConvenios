@@ -3,22 +3,18 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ModalConfirmService } from '@core/modal-confirm';
-import { faDownload, faEdit } from '@fortawesome/free-solid-svg-icons';
-import { TypeModal } from '@modules/administrador/entities';
+import { faSpellCheck } from '@fortawesome/free-solid-svg-icons';
 import { IGestor, IGestorTable } from '@modules/gestor/entities';
 import { GestorService } from '@modules/gestor/services';
 import { Subject, takeUntil } from 'rxjs';
-import { FormGestorComponent } from '..';
-
+import { DetalleComponent, GestionSecretariaComponent } from '..';
 
 @Component({
-  selector: 'app-list-gestor',
-  templateUrl: './list-gestor.component.html',
-  styleUrls: ['./list-gestor.component.sass']
+  selector: 'app-listar-convenios',
+  templateUrl: './listar-convenios.component.html',
+  styleUrls: ['./listar-convenios.component.sass']
 })
-export class ListGestorComponent implements OnInit, OnDestroy {
-
+export class ListarConveniosComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -26,14 +22,12 @@ export class ListGestorComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['nombreInstitucion', 'nombreConvenio', 'tipologiaConvenio', 'estado', 'options'];
   dataSource: MatTableDataSource<IGestorTable>;
 
-  faEdit = faEdit;
-  faDownload = faDownload;
+  faSpellCheck = faSpellCheck;
 
   private _destroy$ = new Subject();
-  
+
   constructor(
     private _gestorService: GestorService,
-    private _modalService: ModalConfirmService,
     private _dialog: MatDialog
   ) { }
 
@@ -57,27 +51,22 @@ export class ListGestorComponent implements OnInit, OnDestroy {
     }
   }
 
-  openFormModal(type: TypeModal, data?: IGestorTable): void {
-    this._dialog.open(FormGestorComponent, {
-      width: '500px',
+  openFormModal(data?: IGestorTable): void {    
+    this._dialog.open(GestionSecretariaComponent, {
+      width: '550px',
       data: {
-        type,
         data,
       }
     });
   }
 
-  downloadPdf(id: any): void {
-    this._gestorService.getPdf(id).subscribe((data) => {
-      let fileURL = URL.createObjectURL(new Blob([data], { type: 'application/pdf' }));
-      window.open(fileURL); 
-      var a         = document.createElement('a');
-      a.href        = fileURL; 
-      a.target      = '_blank';
-      a.download    = `convenio-${id}.pdf`;
-      document.body.appendChild(a);
-      a.click();
-    });
+  viewDetail(data?: IGestorTable): void {
+    this._dialog.open(DetalleComponent, {
+      width: '500px',
+      data: {
+        data,
+      }
+    });    
   }
 
   private _mapGestorResponse(res: IGestor[]): void {
@@ -97,4 +86,3 @@ export class ListGestorComponent implements OnInit, OnDestroy {
   }
 
 }
-
