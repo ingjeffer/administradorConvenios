@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { SecretariaRoutingModule } from './secretaria-routing.module';
 import { SecretariaComponent } from './secretaria.component';
-import { DetalleComponent, GestionSecretariaComponent, ListarConveniosComponent } from './components';
+import { GestionSecretariaComponent, ListarConveniosComponent } from './components';
 import { MaterialModule } from '@shared/material';
 import { GestorService } from '@modules/gestor/services';
 
@@ -13,7 +13,6 @@ import { GestorService } from '@modules/gestor/services';
     ListarConveniosComponent,
     GestionSecretariaComponent,
     SecretariaComponent,
-    DetalleComponent
   ],
   imports: [
     CommonModule,
