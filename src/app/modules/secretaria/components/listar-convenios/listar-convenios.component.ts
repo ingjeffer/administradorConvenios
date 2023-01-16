@@ -7,7 +7,7 @@ import { faSpellCheck } from '@fortawesome/free-solid-svg-icons';
 import { IGestor, IGestorTable } from '@modules/gestor/entities';
 import { GestorService } from '@modules/gestor/services';
 import { Subject, takeUntil } from 'rxjs';
-import { DetalleComponent, GestionSecretariaComponent } from '..';
+import { GestionSecretariaComponent } from '..';
 
 @Component({
   selector: 'app-listar-convenios',
@@ -51,22 +51,13 @@ export class ListarConveniosComponent implements OnInit, OnDestroy {
     }
   }
 
-  openFormModal(data?: IGestorTable): void {    
+  openFormModal(data?: IGestorTable): void {
     this._dialog.open(GestionSecretariaComponent, {
       width: '550px',
       data: {
         data,
       }
     });
-  }
-
-  viewDetail(data?: IGestorTable): void {
-    this._dialog.open(DetalleComponent, {
-      width: '500px',
-      data: {
-        data,
-      }
-    });    
   }
 
   private _mapGestorResponse(res: IGestor[]): void {
