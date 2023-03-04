@@ -46,6 +46,10 @@
             <button mat-icon-button aria-label="Actions row" (click)="openFormModal(element); $event.stopPropagation()">
               <fa-icon [icon]="faSpellCheck"></fa-icon>
             </button>
+
+            <button mat-icon-button aria-label="Actions row" (click)="downloadPdf(element.id); $event.stopPropagation()">
+              <fa-icon [icon]="faDownload"></fa-icon>
+            </button>
           </td>
         </ng-container>
 

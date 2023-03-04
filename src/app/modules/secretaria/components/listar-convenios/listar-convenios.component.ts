@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { faSpellCheck } from '@fortawesome/free-solid-svg-icons';
+import { faDownload, faSpellCheck } from '@fortawesome/free-solid-svg-icons';
 import { IGestor, IGestorTable } from '@modules/gestor/entities';
 import { GestorService } from '@modules/gestor/services';
 import { Subject, takeUntil } from 'rxjs';
@@ -23,6 +23,7 @@ export class ListarConveniosComponent implements OnInit, OnDestroy {
   dataSource: MatTableDataSource<IGestorTable>;
 
   faSpellCheck = faSpellCheck;
+  faDownload = faDownload;
 
   private _destroy$ = new Subject();
 
@@ -57,6 +58,13 @@ export class ListarConveniosComponent implements OnInit, OnDestroy {
       data: {
         data,
       }
+    });
+  }
+
+  downloadPdf(id: any): void {
+    this._gestorService.getPdf(id).subscribe((data) => {
+      let fileURL = URL.createObjectURL(new Blob([data], { type: 'application/pdf' }));
+      window.open(fileURL);
     });
   }
 

@@ -30,7 +30,7 @@ export class ListGestorComponent implements OnInit, OnDestroy {
   faDownload = faDownload;
 
   private _destroy$ = new Subject();
-  
+
   constructor(
     private _gestorService: GestorService,
     private _modalService: ModalConfirmService,
@@ -70,14 +70,18 @@ export class ListGestorComponent implements OnInit, OnDestroy {
   downloadPdf(id: any): void {
     this._gestorService.getPdf(id).subscribe((data) => {
       let fileURL = URL.createObjectURL(new Blob([data], { type: 'application/pdf' }));
-      window.open(fileURL); 
-      var a         = document.createElement('a');
-      a.href        = fileURL; 
-      a.target      = '_blank';
-      a.download    = `convenio-${id}.pdf`;
-      document.body.appendChild(a);
-      a.click();
+      window.open(fileURL);
+      // this._download(fileURL, id);
     });
+  }
+
+  private _download(fileURL: string, id: string): void{
+    const a       = document.createElement('a');
+    a.href        = fileURL;
+    a.target      = '_blank';
+    a.download    = `convenio-${id}.pdf`;
+    document.body.appendChild(a);
+    a.click();
   }
 
   private _mapGestorResponse(res: IGestor[]): void {
