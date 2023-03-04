@@ -22,7 +22,7 @@ export class FormGestorComponent implements OnInit, OnDestroy {
   typeForm: TypeModal;
   file: File;
   checkSignature: boolean = false;
-  
+
   titleForm: string[] = ['Id', 'Nombre Institución', 'Nombre del Convenio', 'Objeto del Convenio', 'Tipología del Convenio', 'Beneficios o Aportes para la UIS/Modalidad de Convenio', 'Beneficiarios de la UIS', 'Caracterización del Objeto y las Actividades del Convenio'];
   formFields: string[] = ['id', 'nombreInstitucion', 'nombreConvenio', 'objetoConvenio', 'tipologiaConvenio', 'modalidadConvenio', 'beneficiarios', 'caracterizacion', 'infoGestor'];
   titleInfoForm: string[] = ['Nombre Responsable del Convenio', 'Fecha', 'Unidad Académica/Administrativa', 'Cargo', 'E-mail', 'Teléfono'];
@@ -65,16 +65,14 @@ export class FormGestorComponent implements OnInit, OnDestroy {
         fecha: typeof(value.infoGestor.fecha) === 'string' ? value.infoGestor.fecha : `${value.infoGestor.fecha.format('YYYY-MM-DD')}T00:00:00Z`
       }
     };
-    
+
     this._gestorService[this.typeForm === 'CREATE' ? 'createConvenio' : 'updateConvenio'](req).subscribe((data) => {
-      console.log(data);
       this._saveSignature(data.id);
     });
   }
 
-  private _saveSignature(id: string): void {  
+  private _saveSignature(id: string): void {
     this._gestorService.firmarConvenio(this.file, id).subscribe((data) => {
-      console.log(data);
       this.dialogRef.close();
     });
   }
@@ -107,8 +105,6 @@ export class FormGestorComponent implements OnInit, OnDestroy {
   }
 
   private _setFormValues(user: IGestor) {
-    console.log(this.formGroup.value);
-    console.log(user);
     this.formGroup.setValue(user);
   }
 

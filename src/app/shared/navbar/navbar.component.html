@@ -15,6 +15,12 @@
           <li class="nav-item" *ngIf="path.includes(pathNavigate.Gestor)">
             <a class="nav-link" [routerLink]="pathNavigate.Gestor" routerLinkActive="active">Gestor</a>
           </li>
+          <li class="nav-item" *ngIf="path.includes(pathNavigate.Secretaria)">
+            <a class="nav-link" [routerLink]="pathNavigate.Secretaria" routerLinkActive="active">Secretaria</a>
+          </li>
+          <li class="nav-item" *ngIf="path.includes(pathNavigate.DirectorRelex)">
+            <a class="nav-link" [routerLink]="pathNavigate.DirectorRelex" routerLinkActive="active">Director Relex</a>
+          </li>
         </ul>
 
         <button class="navbar-text" (click)="logout()">

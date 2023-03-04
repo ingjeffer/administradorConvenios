@@ -1,11 +1,24 @@
-export enum EstadoConvenio {
+export enum EstadoConvenioSecretaria {
     Firmado = "FIRMADO",
-    Aprobado_Secretaria = "APROBADO_SECRETARIA",
-    Rechazado_Secretaria = "RECHAZADO_SECRETARIA"
+    Aprobado = "APROBADO_SECRETARIA",
+    Rechazado = "RECHAZADO_SECRETARIA"
 }
 
-export interface IEstadoConvenio {
+export interface IEstadoConvenioSecretaria {
     Firmado: string;
-    Aprobado_Secretaria: string;
-    Rechazado_Secretaria: string;
+    Aprobado: string;
+    Rechazado: string;
+}
+
+
+export enum EstadoConvenioDirectorRelex {
+    Firmado = "FIRMADO",
+    Aprobado = "APROBADO_DIRECTOR_RELEX",
+    Rechazado = "RECHAZADO_DIRECTOR_RELEX"
+}
+
+export interface IEstadoConvenioDirectorRelex {
+    Firmado: string;
+    Aprobado: string;
+    Rechazado: string;
 }

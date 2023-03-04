@@ -10,6 +10,7 @@ const routes: Routes = [
       { path: NavigatePath.Admin, loadChildren: () => import('@modules/administrador/administrador.module').then((m) => m.AdministradorModule) },
       { path: NavigatePath.Gestor, loadChildren: () => import('@modules/gestor/gestor.module').then((m) => m.GestorModule) },
       { path: NavigatePath.Secretaria, loadChildren: () => import('@modules/secretaria/secretaria.module').then((m) => m.SecretariaModule) },
+      { path: NavigatePath.DirectorRelex, loadChildren: () => import('@modules/secretaria/secretaria.module').then((m) => m.SecretariaModule) },
     ]
   }
 ];

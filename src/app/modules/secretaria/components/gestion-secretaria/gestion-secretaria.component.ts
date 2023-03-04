@@ -1,9 +1,11 @@
-import { ICambiarEstado } from './../../entities/cambiar-estado';
+import { EstadoConvenioDirectorRelex, IEstadoConvenioDirectorRelex } from '@modules/gestor/constants/estados-convenio';
+import { ICambiarEstado } from '@modules/secretaria/entities/cambiar-estado';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { getRoleId } from '@helpers/index';
 import { ITypeModal } from '@modules/administrador/entities';
-import { EstadoConvenio, IEstadoConvenio } from '@modules/gestor/constants';
+import { EstadoConvenioSecretaria, IEstadoConvenioSecretaria } from '@modules/gestor/constants';
 import { IGestor } from '@modules/gestor/entities';
 import { GestorService } from '@modules/gestor/services';
 import { Subject, takeUntil } from 'rxjs';
@@ -23,6 +25,8 @@ export class GestionSecretariaComponent implements OnInit, OnDestroy {
   lengthFirstForm = [ ...Array(8).keys() ];
   lengthInfoForm = [ ...Array(6).keys() ];
 
+  roleId: number = -1;
+
   private _destroy$ = new Subject();
 
   constructor(
@@ -39,6 +43,8 @@ export class GestionSecretariaComponent implements OnInit, OnDestroy {
     .subscribe(() => {
       this._setFormValues(this.data.data)
     });
+
+    this.roleId = getRoleId();
   }
 
   ngOnDestroy(): void {
@@ -48,14 +54,11 @@ export class GestionSecretariaComponent implements OnInit, OnDestroy {
 
   save() {
     const { value } = this.formGroup;
-    console.log(value);
-
     const state: ICambiarEstado = {
-      cambioEstado: this.estadoAlias?.value !== this.options.Rechazado_Secretaria,
+      cambioEstado: this.estadoAlias?.value !== this.options.Rechazado,
       observacion: this.observacionAlias?.value,
     };
-    this._gestorService.cambiarEstadoConvenios(state, value.id).subscribe((data) => {
-      console.log(data);
+    this._gestorService.cambiarEstadoConvenios(state, value.id).subscribe((_data) => {
       this.dialogRef.close();
     });
   }
@@ -92,8 +95,6 @@ export class GestionSecretariaComponent implements OnInit, OnDestroy {
   }
 
   private _setFormValues(user: IGestor) {
-    console.log(this.formGroup.value);
-    console.log(user);
     const userCustom = {
       ...user,
       observaciones: user.observaciones ?? ''
@@ -110,10 +111,24 @@ export class GestionSecretariaComponent implements OnInit, OnDestroy {
   }
 
   get stateOptions(): Array<any> {
-    return Object.values(EstadoConvenio);
+    switch (this.roleId) {
+      case 3:
+        return Object.values(EstadoConvenioSecretaria);
+      case 4:
+        return Object.values(EstadoConvenioDirectorRelex);
+      default:
+        return Object.values(EstadoConvenioSecretaria);
+    }
   }
 
-  get options(): IEstadoConvenio {
-    return EstadoConvenio;
+  get options(): IEstadoConvenioSecretaria | IEstadoConvenioDirectorRelex {
+    switch (this.roleId) {
+      case 3:
+        return EstadoConvenioSecretaria;
+      case 4:
+        return EstadoConvenioDirectorRelex;
+      default:
+        return EstadoConvenioSecretaria;
+    }
   }
 }

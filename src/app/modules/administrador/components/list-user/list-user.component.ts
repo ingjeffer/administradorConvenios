@@ -64,9 +64,8 @@ export class ListUserComponent implements OnInit, OnDestroy {
   }
 
   deleteUser(event: any) {
-    console.log(event);
     this._userSelected = event;
-    
+
     const data: IModalData = {
       message: '¿Estás seguro de eliminar al usuario?',
       buttonCancel: 'Cancelar',
@@ -86,7 +85,7 @@ export class ListUserComponent implements OnInit, OnDestroy {
     };
 
     delete newData.rol;
-    
+
     this._dialog.open(FormUserComponent, {
       width: '500px',
       data: {
@@ -120,17 +119,13 @@ export class ListUserComponent implements OnInit, OnDestroy {
   }
 
   private _confirmModal(confirm: boolean) {
-    console.log(confirm);
-    
     if (confirm) {
       const { id, tipoId } = this._userSelected;
       this._adminService.deleteUser(tipoId, id).subscribe(this._responseDelete.bind(this));
     }
   }
 
-  private _responseDelete(data: any) {
-    console.log(data);
-  }
+  private _responseDelete(_data: any) {}
 
   private _setupDataSource() {
     this.dataSource.paginator = this.paginator;

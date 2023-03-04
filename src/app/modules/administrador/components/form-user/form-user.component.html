@@ -2,7 +2,7 @@
     <h1 mat-dialog-title>Datos del Usuario</h1>
     <form class="form-user" [formGroup]="formGroup">
         <mat-form-field appearance="fill">
-            <mat-label> {{ titleForm[0] }} 
+            <mat-label> {{ titleForm[0] }}
                 <ng-container *ngIf="typeForm === 'EDIT'">
                     <span class="text-danger">Solo lectura</span>
                 </ng-container>
@@ -13,17 +13,17 @@
             <mat-label> {{ titleForm[2] }} </mat-label>
             <input matInput [formControlName]="formFields[2]">
         </mat-form-field>
-    
+
         <mat-form-field appearance="fill">
             <mat-label> {{ titleForm[3] }} </mat-label>
             <input matInput [formControlName]="formFields[3]">
         </mat-form-field>
-    
+
         <mat-form-field appearance="fill">
             <mat-label> {{ titleForm[4] }} </mat-label>
             <input type="email" matInput [formControlName]="formFields[4]">
         </mat-form-field>
-    
+
         <mat-form-field appearance="fill">
             <mat-label> {{ titleForm[5] }} 6 dig </mat-label>
             <input [type]="showPassword ? 'text' : 'password'" matInput [formControlName]="formFields[5]">
@@ -32,7 +32,7 @@
             </mat-icon>
             <small class="text-danger text-repeat" *ngIf="passwordMatchError">La contraseña no coincide</small>
         </mat-form-field>
-    
+
         <mat-form-field appearance="fill">
             <mat-label> {{ titleForm[6] }} 6 dig </mat-label>
             <input [type]="showRepeatPassword ? 'text' : 'password'" matInput [formControlName]="formFields[6]">
@@ -41,7 +41,7 @@
             </mat-icon>
             <small class="text-danger text-repeat" *ngIf="passwordMatchError">La contraseña no coincide</small>
         </mat-form-field>
-    
+
         <mat-form-field appearance="fill">
             <mat-label> {{ titleForm[7] }} </mat-label>
             <mat-select [formControlName]="formFields[7]">
