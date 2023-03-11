@@ -10,7 +10,6 @@ export interface IEstadoConvenioSecretaria {
     Rechazado: string;
 }
 
-
 export enum EstadoConvenioDirectorRelex {
     Firmado = "FIRMADO",
     Aprobado = "APROBADO_DIRECTOR_RELEX",
@@ -18,6 +17,18 @@ export enum EstadoConvenioDirectorRelex {
 }
 
 export interface IEstadoConvenioDirectorRelex {
+    Firmado: string;
+    Aprobado: string;
+    Rechazado: string;
+}
+
+export enum EstadoConvenioConsejoAca {
+    Firmado = "FIRMADO",
+    Aprobado = "APROBADO_CONSEJO_ACADEMICO",
+    Rechazado = "RECHAZADO_CONSEJO_ACADEMICO"
+}
+
+export interface IEstadoConvenioConsejoAca {
     Firmado: string;
     Aprobado: string;
     Rechazado: string;

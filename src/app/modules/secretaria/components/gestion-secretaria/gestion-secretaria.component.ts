@@ -1,3 +1,4 @@
+import { EstadoConvenioConsejoAca, IEstadoConvenioConsejoAca } from '@modules/gestor/constants/estados-convenio';
 import { EstadoConvenioDirectorRelex, IEstadoConvenioDirectorRelex } from '@modules/gestor/constants/estados-convenio';
 import { ICambiarEstado } from '@modules/secretaria/entities/cambiar-estado';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
@@ -116,17 +117,21 @@ export class GestionSecretariaComponent implements OnInit, OnDestroy {
         return Object.values(EstadoConvenioSecretaria);
       case 4:
         return Object.values(EstadoConvenioDirectorRelex);
+      case 5:
+        return Object.values(EstadoConvenioConsejoAca);
       default:
         return Object.values(EstadoConvenioSecretaria);
     }
   }
 
-  get options(): IEstadoConvenioSecretaria | IEstadoConvenioDirectorRelex {
+  get options(): IEstadoConvenioSecretaria | IEstadoConvenioDirectorRelex | IEstadoConvenioConsejoAca {
     switch (this.roleId) {
       case 3:
         return EstadoConvenioSecretaria;
       case 4:
         return EstadoConvenioDirectorRelex;
+      case 5:
+        return EstadoConvenioConsejoAca;
       default:
         return EstadoConvenioSecretaria;
     }

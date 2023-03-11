@@ -11,6 +11,7 @@ const routes: Routes = [
       { path: NavigatePath.Gestor, loadChildren: () => import('@modules/gestor/gestor.module').then((m) => m.GestorModule) },
       { path: NavigatePath.Secretaria, loadChildren: () => import('@modules/secretaria/secretaria.module').then((m) => m.SecretariaModule) },
       { path: NavigatePath.DirectorRelex, loadChildren: () => import('@modules/secretaria/secretaria.module').then((m) => m.SecretariaModule) },
+      { path: NavigatePath.ConsejoAcademico, loadChildren: () => import('@modules/secretaria/secretaria.module').then((m) => m.SecretariaModule) },
     ]
   }
 ];

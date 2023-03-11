@@ -4,7 +4,8 @@ export enum NavigatePath {
     Admin = 'admin',
     Gestor = 'gestor',
     Secretaria = 'secretaria',
-    DirectorRelex = 'director_relex',
+    DirectorRelex = 'director-relex',
+    ConsejoAcademico = 'consejo-academico',
     Default = '**',
 }
 
@@ -15,5 +16,6 @@ export interface INavigatePath {
     Gestor: string;
     Secretaria: string;
     DirectorRelex: string;
+    ConsejoAcademico: string;
     Default: string;
 }
