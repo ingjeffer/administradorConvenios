@@ -1,12 +1,23 @@
-import { EstadoConvenioConsejoAca, IEstadoConvenioConsejoAca } from '@modules/gestor/constants/estados-convenio';
-import { EstadoConvenioDirectorRelex, IEstadoConvenioDirectorRelex } from '@modules/gestor/constants/estados-convenio';
+import {
+  EstadoConvenioConsejoAca,
+  EstadoDirJuridico,
+  EstadoRectoria,
+  EstadoVicerrectoria,
+  EstadoConvenioDirectorRelex,
+  EstadoConvenioSecretaria,
+  IEstadoConvenioConsejoAca,
+  IEstadoDirJuridico,
+  IEstadoRectoria,
+  IEstadoVicerrectoria,
+  IEstadoConvenioSecretaria,
+  IEstadoConvenioDirectorRelex,
+} from '@modules/gestor/constants/estados-convenio';
 import { ICambiarEstado } from '@modules/secretaria/entities/cambiar-estado';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { getRoleId } from '@helpers/index';
 import { ITypeModal } from '@modules/administrador/entities';
-import { EstadoConvenioSecretaria, IEstadoConvenioSecretaria } from '@modules/gestor/constants';
 import { IGestor } from '@modules/gestor/entities';
 import { GestorService } from '@modules/gestor/services';
 import { Subject, takeUntil } from 'rxjs';
@@ -119,12 +130,20 @@ export class GestionSecretariaComponent implements OnInit, OnDestroy {
         return Object.values(EstadoConvenioDirectorRelex);
       case 5:
         return Object.values(EstadoConvenioConsejoAca);
+      case 6:
+        return Object.values(EstadoVicerrectoria);
+      case 7:
+        return Object.values(EstadoDirJuridico);
+      case 8:
+        return Object.values(EstadoRectoria);
       default:
         return Object.values(EstadoConvenioSecretaria);
     }
   }
 
-  get options(): IEstadoConvenioSecretaria | IEstadoConvenioDirectorRelex | IEstadoConvenioConsejoAca {
+  get options(): IEstadoConvenioSecretaria | IEstadoConvenioDirectorRelex |
+                 IEstadoConvenioConsejoAca | IEstadoVicerrectoria |
+                 IEstadoDirJuridico | IEstadoRectoria {
     switch (this.roleId) {
       case 3:
         return EstadoConvenioSecretaria;
@@ -132,6 +151,12 @@ export class GestionSecretariaComponent implements OnInit, OnDestroy {
         return EstadoConvenioDirectorRelex;
       case 5:
         return EstadoConvenioConsejoAca;
+      case 6:
+        return EstadoVicerrectoria;
+      case 7:
+        return EstadoDirJuridico;
+      case 8:
+        return EstadoRectoria;
       default:
         return EstadoConvenioSecretaria;
     }

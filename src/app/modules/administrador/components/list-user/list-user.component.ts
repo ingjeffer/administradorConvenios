@@ -23,7 +23,7 @@ export class ListUserComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  displayedColumns: string[] = ['id', 'nombres', 'apellidos', 'tipoId', 'email', 'roles', 'Options'];
+  displayedColumns: string[] = ['id', 'nombres', 'apellidos', 'tipoId', 'email', 'rol', 'Options'];
   titleColumns: string[] = ['Cédula', 'Tipo de Documento', 'Nombres', 'Apellidos', 'Correo', 'Rol', 'Opciones'];
   dataSource: MatTableDataSource<IUserTable>;
 
@@ -102,6 +102,8 @@ export class ListUserComponent implements OnInit, OnDestroy {
   }
 
   private _mapUserResponse(res: IUserTable[]) {
+    console.log(res);
+
     const data: IUserTable[] = res.map((us: IUserTable) => ({
       id: us.id,
       nombres: us.nombres,

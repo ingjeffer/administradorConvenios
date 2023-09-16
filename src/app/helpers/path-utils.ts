@@ -7,6 +7,9 @@ const pathRole: any = {
     3: NavigatePath.Secretaria,
     4: NavigatePath.DirectorRelex,
     5: NavigatePath.ConsejoAcademico,
+    6: NavigatePath.Vicerrectoria,
+    7: NavigatePath.DirJuridico,
+    8: NavigatePath.Rectoria,
     undefined: NavigatePath.Default
 }
 

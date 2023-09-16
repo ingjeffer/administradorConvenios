@@ -24,6 +24,15 @@
           <li class="nav-item" *ngIf="path.includes(pathNavigate.ConsejoAcademico)">
             <a class="nav-link" [routerLink]="pathNavigate.ConsejoAcademico" routerLinkActive="active">Consejo Académico</a>
           </li>
+          <li class="nav-item" *ngIf="path.includes(pathNavigate.Vicerrectoria)">
+            <a class="nav-link" [routerLink]="pathNavigate.Vicerrectoria" routerLinkActive="active">Vicerrectoría</a>
+          </li>
+          <li class="nav-item" *ngIf="path.includes(pathNavigate.Rectoria)">
+            <a class="nav-link" [routerLink]="pathNavigate.Rectoria" routerLinkActive="active">Rectoría</a>
+          </li>
+          <li class="nav-item" *ngIf="path.includes(pathNavigate.DirJuridico)">
+            <a class="nav-link" [routerLink]="pathNavigate.DirJuridico" routerLinkActive="active">Director Jurídico</a>
+          </li>
         </ul>
 
         <button class="navbar-text" (click)="logout()">

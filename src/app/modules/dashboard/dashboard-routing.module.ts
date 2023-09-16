@@ -12,6 +12,9 @@ const routes: Routes = [
       { path: NavigatePath.Secretaria, loadChildren: () => import('@modules/secretaria/secretaria.module').then((m) => m.SecretariaModule) },
       { path: NavigatePath.DirectorRelex, loadChildren: () => import('@modules/secretaria/secretaria.module').then((m) => m.SecretariaModule) },
       { path: NavigatePath.ConsejoAcademico, loadChildren: () => import('@modules/secretaria/secretaria.module').then((m) => m.SecretariaModule) },
+      { path: NavigatePath.Vicerrectoria, loadChildren: () => import('@modules/secretaria/secretaria.module').then((m) => m.SecretariaModule) },
+      { path: NavigatePath.DirJuridico, loadChildren: () => import('@modules/secretaria/secretaria.module').then((m) => m.SecretariaModule) },
+      { path: NavigatePath.Rectoria, loadChildren: () => import('@modules/secretaria/secretaria.module').then((m) => m.SecretariaModule) },
     ]
   }
 ];
