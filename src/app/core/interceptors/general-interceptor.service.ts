@@ -25,7 +25,7 @@ export class GeneralInterceptorService implements HttpInterceptor {
 
         const token = getToken();
 
-        let request = req;                
+        let request = req;
 
         if (token) {
             request = req.clone({
@@ -48,7 +48,7 @@ export class GeneralInterceptorService implements HttpInterceptor {
                 console.log(request.method);
                 if (event.status === 200 && request.method !== 'GET') {
                     this._toastr.success(
-                        'La operación se ejecutó exitosamente', 
+                        'La operación se ejecutó exitosamente',
                         `Error ${event.status} - ${event.statusText}`,
                         this._toastOptions,
                     );
@@ -62,7 +62,7 @@ export class GeneralInterceptorService implements HttpInterceptor {
 	          	console.error(err.message);
 	          	console.log("--- end of response---");
                   this._toastr.error(
-                    'Ocurrió un error en la operación', 
+                    'Ocurrió un error en la operación',
                     `Error ${err.status} - ${err.statusText}`,
                     this._toastOptions,
                 );

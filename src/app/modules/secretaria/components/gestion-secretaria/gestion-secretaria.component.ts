@@ -21,6 +21,7 @@ import { ITypeModal } from '@modules/administrador/entities';
 import { IGestor } from '@modules/gestor/entities';
 import { GestorService } from '@modules/gestor/services';
 import { Subject, takeUntil } from 'rxjs';
+import { ROLES } from '@const/contants';
 
 @Component({
   selector: 'app-gestion-secretaria',
@@ -38,6 +39,7 @@ export class GestionSecretariaComponent implements OnInit, OnDestroy {
   lengthInfoForm = [ ...Array(6).keys() ];
 
   roleId: number = -1;
+  currentState: string | undefined = "";
 
   private _destroy$ = new Subject();
 
@@ -53,7 +55,8 @@ export class GestionSecretariaComponent implements OnInit, OnDestroy {
     this.dialogRef.afterOpened()
     .pipe(takeUntil(this._destroy$))
     .subscribe(() => {
-      this._setFormValues(this.data.data)
+      this.currentState = this.data.data.estado;
+      this._setFormValues(this.data.data);
     });
 
     this.roleId = getRoleId();
@@ -122,19 +125,23 @@ export class GestionSecretariaComponent implements OnInit, OnDestroy {
     return this.formGroup.get('observaciones');
   }
 
+  get estadoRectoria(): IEstadoRectoria {
+    return EstadoRectoria;
+  }
+
   get stateOptions(): Array<any> {
     switch (this.roleId) {
-      case 3:
+      case ROLES.SECRETARIA:
         return Object.values(EstadoConvenioSecretaria);
-      case 4:
+      case ROLES.DIRECTOR_RELEX:
         return Object.values(EstadoConvenioDirectorRelex);
-      case 5:
+      case ROLES.CONSEJO_ACADEMICO:
         return Object.values(EstadoConvenioConsejoAca);
-      case 6:
+      case ROLES.VICERRECTORIA:
         return Object.values(EstadoVicerrectoria);
-      case 7:
+      case ROLES.DIR_JURIDICO:
         return Object.values(EstadoDirJuridico);
-      case 8:
+      case ROLES.RECTORIA:
         return Object.values(EstadoRectoria);
       default:
         return Object.values(EstadoConvenioSecretaria);

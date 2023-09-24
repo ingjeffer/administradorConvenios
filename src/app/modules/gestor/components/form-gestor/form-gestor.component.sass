@@ -1,12 +1,20 @@
 .form-gestor-cont
-    .form-gestor
+    height: 90vh
+    overflow: hidden
+    .form-gestor, .form-gestor-info
         display: flex
-        flex-direction: column
         align-items: center
         .text-repeat
             font-size: 0.5rem
+    .form-gestor
+        flex-direction: column
+        overflow-y: scroll
+        height: 85%
+    .form-gestor-info
+        flex-wrap: wrap
+        justify-content: space-around
 
-    ::ng-deep 
+    ::ng-deep
         .mat-form-field-infix
             display: flex
 

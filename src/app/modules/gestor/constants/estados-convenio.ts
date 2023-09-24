@@ -1,12 +1,10 @@
 //#region Secretaria
 export enum EstadoConvenioSecretaria {
-    Firmado = "FIRMADO",
     Aprobado = "APROBADO_SECRETARIA",
     Rechazado = "RECHAZADO_SECRETARIA"
 }
 
 export interface IEstadoConvenioSecretaria {
-    Firmado: string;
     Aprobado: string;
     Rechazado: string;
 }
