@@ -114,7 +114,8 @@ export class ListUserComponent implements OnInit, OnDestroy {
       rol: {
         id: us.rol.id,
         nombre: us.rol.nombre
-      }
+      },
+      firma: us.firma ?? '',
     }));
     this.dataSource = new MatTableDataSource<IUserTable>(data);
     this._setupDataSource();

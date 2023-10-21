@@ -1,6 +1,6 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators, AbstractControl } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
+import { Observable, ReplaySubject, Subject, takeUntil } from 'rxjs';
 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
@@ -17,11 +17,12 @@ import { AdministradorService } from '@modules/administrador/services';
 })
 export class FormUserComponent implements OnInit, OnDestroy {
 
-  titleForm: string[] = ['Cédula', 'Tipo de Documento', 'Nombres', 'Apellidos', 'Correo', 'Contraseña', 'Repetir Contraseña', 'Rol'];
-  formFields: string[] = ['id', 'tipoId', 'nombres', 'apellidos', 'email', 'password', 'repeatPassword', 'roleId'];
+  titleForm: string[] = ['Cédula', 'Tipo de Documento', 'Nombres', 'Apellidos', 'Correo', 'Contraseña', 'Repetir Contraseña', 'Rol', 'Firmar'];
+  formFields: string[] = ['id', 'tipoId', 'nombres', 'apellidos', 'email', 'password', 'repeatPassword', 'roleId', 'firma'];
   roles: IRoles[] = [];
   formGroup: FormGroup;
   typeForm: TypeModal;
+  checkSignature: boolean = false;
 
   showPassword = false;
   showRepeatPassword = false;
@@ -46,6 +47,7 @@ export class FormUserComponent implements OnInit, OnDestroy {
     this.dialogRef.afterOpened()
     .pipe(takeUntil(this._destroy$))
     .subscribe(() => {
+      console.log(this.data.data);
       this.typeForm = this.data.type;
       if (!!this.data && this.data.type === 'EDIT') {
         this._setFormValues(this.data.data)
@@ -58,10 +60,24 @@ export class FormUserComponent implements OnInit, OnDestroy {
     this._destroy$.complete();
   }
 
+  onFileSelected(event: any) {
+    this.convertFile(event.target.files[0]).subscribe(base64 => {
+      this._setFileBase64(base64);
+    });
+  }
+
+  convertFile(file : File) : Observable<string> {
+    const result = new ReplaySubject<string>(1);
+    const reader = new FileReader();
+    reader.readAsBinaryString(file);
+    reader.onload = (event: any) => result.next(btoa(event.target.result.toString()));
+    return result;
+  }
+
   save() {
     const values = this.formGroup.value;
-    const { id, nombres, apellidos, password, email, roleId, tipoId } = values;
-    
+    const { id, nombres, apellidos, password, email, roleId, tipoId, firma } = values;
+
     const user: IUser = {
       id: `${id}`,
       nombres,
@@ -69,9 +85,10 @@ export class FormUserComponent implements OnInit, OnDestroy {
       tipoId,
       email,
       password,
-      roleId 
+      roleId,
+      firma,
     }
-    
+
     this._adminService[this.typeForm === 'CREATE' ? 'createUser' : 'updateUser'](user)
     .pipe(takeUntil(this._destroy$))
     .subscribe(this._mapUserResponse.bind(this));
@@ -91,7 +108,8 @@ export class FormUserComponent implements OnInit, OnDestroy {
       [this.formFields[5]]: new FormControl('', [Validators.required, Validators.maxLength(this._passwordMaxLength), Validators.minLength(this._passwordMinLength)]),
       [this.formFields[6]]: new FormControl('', [Validators.required, Validators.maxLength(this._passwordMaxLength), Validators.minLength(this._passwordMinLength)]),
       [this.formFields[7]]: new FormControl('', [Validators.required]),
-    }, 
+      [this.formFields[8]]: new FormControl('', [Validators.required]),
+    },
       [CustomValidators.MatchValidator(this.formFields[5], this.formFields[6])]
     );
   }
@@ -102,8 +120,16 @@ export class FormUserComponent implements OnInit, OnDestroy {
       this.formGroup.get(this.formFields[6])?.touched
     );
   }
-  
+
   private _setFormValues(user: IUser) {
     this.formGroup.setValue(user);
+  }
+
+  get signatureAlias() {
+    return this.formGroup.get(this.formFields[8]);
+  }
+
+  private _setFileBase64(base64: string) {
+    this.signatureAlias?.setValue(base64);
   }
 }

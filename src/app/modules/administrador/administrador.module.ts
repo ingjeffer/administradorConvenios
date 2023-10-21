@@ -7,7 +7,7 @@ import { AdministradorRoutingModule } from './administrador-routing.module';
 import { AdministradorComponent } from './administrador.component';
 import { FormUserComponent, ListUserComponent } from './components';
 import { AdministradorService } from './services';
-
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -18,6 +18,7 @@ import { AdministradorService } from './services';
   imports: [
     CommonModule,
     AdministradorRoutingModule,
+    FormsModule,
     MaterialModule,
   ],
   providers: [

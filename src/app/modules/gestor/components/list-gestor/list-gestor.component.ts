@@ -71,17 +71,7 @@ export class ListGestorComponent implements OnInit, OnDestroy {
     this._gestorService.getPdf(id).subscribe((data) => {
       let fileURL = URL.createObjectURL(new Blob([data], { type: 'application/pdf' }));
       window.open(fileURL);
-      // this._download(fileURL, id);
     });
-  }
-
-  private _download(fileURL: string, id: string): void{
-    const a       = document.createElement('a');
-    a.href        = fileURL;
-    a.target      = '_blank';
-    a.download    = `convenio-${id}.pdf`;
-    document.body.appendChild(a);
-    a.click();
   }
 
   private _mapGestorResponse(res: IGestor[]): void {

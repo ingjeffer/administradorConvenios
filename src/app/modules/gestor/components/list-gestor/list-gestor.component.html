@@ -43,7 +43,7 @@
         <ng-container [matColumnDef]="displayedColumns[4]">
           <th mat-header-cell *matHeaderCellDef aria-label="row actions"> {{ titleColumns[4] }} </th>
           <td mat-cell *matCellDef="let element">
-            <button mat-icon-button aria-label="Actions row" (click)="openFormModal('EDIT', element); $event.stopPropagation()">
+            <button [ngClass]="{ 'invisible': element.estado === 'APROBADO'}" mat-icon-button aria-label="Actions row" (click)="openFormModal('EDIT', element); $event.stopPropagation()">
               <fa-icon [icon]="faEdit"></fa-icon>
             </button>
 

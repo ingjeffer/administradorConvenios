@@ -8,6 +8,7 @@ export interface IUser {
     email: string;
     password: string;
     roleId: number;
+    firma: string;
 }
 
 export interface IUserTable {
@@ -17,6 +18,7 @@ export interface IUserTable {
     tipoId: string;
     email: string;
     password?: string;
+    firma?: string;
     rol: {
         id: number;
         nombre: string;

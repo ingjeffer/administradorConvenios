@@ -132,7 +132,7 @@ export class GestionSecretariaComponent implements OnInit, OnDestroy {
   get stateOptions(): Array<any> {
     switch (this.roleId) {
       case ROLES.SECRETARIA:
-        return Object.values(EstadoConvenioSecretaria);
+        return this.currentState === EstadoRectoria.Aprobado ? [EstadoConvenioSecretaria.Aprobado] : Object.values(EstadoConvenioSecretaria);
       case ROLES.DIRECTOR_RELEX:
         return Object.values(EstadoConvenioDirectorRelex);
       case ROLES.CONSEJO_ACADEMICO:

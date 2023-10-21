@@ -18,10 +18,7 @@ export class FormGestorComponent implements OnInit, OnDestroy {
   @ViewChild('caracterizacionInput', { static: false }) caracterizacionInput: ElementRef;
 
   formGroup: FormGroup;
-  formFile: FormControl;
   typeForm: TypeModal;
-  file: File;
-  checkSignature: boolean = false;
 
   titleForm: string[] = ['Id', 'Nombre Institución', 'Nombre del Convenio', 'Objeto del Convenio', 'Tipología del Convenio', 'Beneficios o Aportes para la UIS/Modalidad de Convenio', 'Beneficiarios de la UIS', 'Caracterización del Objeto y las Actividades del Convenio'];
   formFields: string[] = ['id', 'nombreInstitucion', 'nombreConvenio', 'objetoConvenio', 'tipologiaConvenio', 'modalidadConvenio', 'beneficiarios', 'caracterizacion', 'infoGestor'];
@@ -67,19 +64,10 @@ export class FormGestorComponent implements OnInit, OnDestroy {
     };
 
     this._gestorService[this.typeForm === 'CREATE' ? 'createConvenio' : 'updateConvenio'](req).subscribe((data) => {
-      this._saveSignature(data.id);
-    });
-  }
-
-  private _saveSignature(id: string): void {
-    this._gestorService.firmarConvenio(this.file, id).subscribe((data) => {
       this.dialogRef.close();
     });
   }
 
-  onChange(event: any) {
-    this.file = event.target.files[0];
-  }
 
   private _createForm() {
     this.formGroup = new FormGroup({
@@ -101,7 +89,6 @@ export class FormGestorComponent implements OnInit, OnDestroy {
       }),
       estado: new FormControl(''),
     });
-    this.formFile = new FormControl('');
   }
 
   private _setFormValues(user: IGestor) {
